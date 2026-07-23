@@ -71,10 +71,10 @@
         <div class="field">
           <label for="app">Which app is this about?</label>
           <select id="app" name="app">
-            <option value="WaterTracker">WaterTracker</option>
             <option value="VitaminTracker">VitaminTracker</option>
-            <option value="WeightTracker">WeightTracker</option>
+            <option value="WaterTracker">WaterTracker</option>
             <option value="HabitTracker">HabitTracker</option>
+            <option value="WeightTracker">WeightTracker</option>
             <option value="Other">Other</option>
 
           </select>
@@ -113,7 +113,7 @@
         <h2>Direct contact</h2>
         <div class="contact-card">
           <div class="name">Support</div>
-          <a href="mailto:Support@LifeTracker.Studio" class="email">Support@LifeTracker.Studio</a>
+          <a href="mailto:Support@LifeTracker." class="email">Support@LifeTracker.</a>
         </div>
       
       </div>
@@ -145,7 +145,7 @@
     var subject = encodeURIComponent('[' + app + '] ' + query + ' from ' + name);
     var body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
 
-    window.location.href = 'mailto:Support@LifeTracker.Studio?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:Support@LifeTracker.?subject=' + subject + '&body=' + body;
   });
 </script>
 
