@@ -263,6 +263,10 @@ body.dark .nav-dropdown-menu a:focus-visible {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.app-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .app-card {
   background: var(--card-bg);
   border: 1px solid var(--line);
