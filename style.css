@@ -802,7 +802,7 @@ body.dark {
 
 @keyframes carousel-scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(calc(-4 * (100px + 16px))); }
+  100% { transform: translateX(calc(-6 * (100px + 16px))); }
 }
 
 @media (max-width: 760px) {
