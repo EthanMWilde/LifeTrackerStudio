@@ -1,0 +1,924 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rian Thai — Learn Thai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#D4A574;
+  --gold-deep:#B98A56;
+  --accent:#E85D75;
+  --green:#6BB86B;
+  --warn:#F4A460;
+  --ink:#2C3E50;
+  --ink-soft:#6B7B8C;
+  --bg:#F8F6F3;
+  --card:#FFFFFF;
+  --line:#EAE4DC;
+  --shadow:0 2px 8px rgba(44,62,80,.10);
+  --shadow-lift:0 10px 26px rgba(44,62,80,.16);
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter','Noto Sans Thai',system-ui,-apple-system,sans-serif;
+  font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+.thai{font-family:'Noto Sans Thai','Inter',sans-serif;}
+h1,h2,h3,.display{font-family:'Rubik','Noto Sans Thai',sans-serif;font-weight:600;letter-spacing:-.01em;margin:0}
+h1{font-size:24px}
+h2{font-size:18px}
+h3{font-size:16px}
+.caption{font-size:11px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* ---------- shell ---------- */
+#app{max-width:1160px;margin:0 auto;padding:0 16px 96px;}
+.screen{display:none;animation:fade .28s ease-out}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.topbar{
+  position:sticky;top:0;z-index:20;background:rgba(248,246,243,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:12px 0;margin-bottom:20px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Rubik',sans-serif;font-weight:700;font-size:17px}
+.brand .mark{
+  width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--gold),var(--accent));color:#fff;font-size:18px;
+  font-family:'Noto Sans Thai',sans-serif;padding-bottom:2px;
+}
+.spacer{flex:1}
+.topnav{display:none;gap:4px;margin-left:18px}
+.topnav button{min-height:38px;padding:0 14px;border-radius:8px;font-weight:600;font-size:14px;color:var(--ink-soft)}
+.topnav button:hover{background:rgba(212,165,116,.14);color:var(--ink)}
+.topnav button[aria-current="page"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:6px 12px;font-weight:600;font-size:12px;box-shadow:var(--shadow)
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;padding:0 20px;border-radius:8px;font-weight:600;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn-primary{background:var(--gold);color:#3B2A17;box-shadow:0 2px 0 var(--gold-deep)}
+.btn-primary:hover{background:#DFB183}
+.btn-primary:active{transform:translateY(2px);box-shadow:none}
+.btn-accent{background:var(--accent);color:#fff;box-shadow:0 2px 0 #C6455C}
+.btn-accent:hover{background:#EE6E84}
+.btn-accent:active{transform:translateY(2px);box-shadow:none}
+.btn-ghost{border:1.5px solid var(--gold);color:var(--ink);background:transparent}
+.btn-ghost:hover{background:rgba(212,165,116,.12)}
+.btn-quiet{color:var(--ink-soft);font-weight:500;min-height:40px;padding:0 12px}
+.btn-quiet:hover{color:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn-lg{min-height:52px;font-size:16px;padding:0 28px}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;border:1px solid var(--line)}
+
+/* ---------- home ---------- */
+.hero{display:grid;gap:22px;align-items:center;padding:8px 0 4px}
+.hero-copy .eyebrow{color:var(--accent);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.hero h1{font-size:32px;line-height:1.15;margin:8px 0 10px}
+.hero p{color:var(--ink-soft);margin:0 0 20px;max-width:44ch}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px}
+.ring-wrap{display:grid;place-items:center;position:relative}
+.ring-center{position:absolute;text-align:center;pointer-events:none}
+.ring-center .big{font-family:'Rubik',sans-serif;font-weight:700;font-size:30px;line-height:1}
+.ring-center .lbl{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-top:4px}
+.pulse{animation:pulse .6s ease-out}
+@keyframes pulse{0%{transform:scale(1)}45%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0 8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--shadow)}
+.stat .n{font-family:'Rubik',sans-serif;font-weight:700;font-size:22px}
+.stat .l{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+
+/* ---------- hub ---------- */
+.tabs{display:flex;gap:6px;background:#EFEAE3;padding:4px;border-radius:10px;margin:4px 0 18px}
+.tab{flex:1;min-height:40px;border-radius:8px;font-weight:600;font-size:13px;color:var(--ink-soft)}
+.tab[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.track-note{color:var(--ink-soft);margin:0 0 16px}
+.levels{display:grid;grid-template-columns:1fr;gap:12px}
+.level-card{
+  display:flex;align-items:center;gap:14px;text-align:left;width:100%;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--shadow);transition:transform .14s ease,box-shadow .14s ease;
+}
+.level-card:hover:not([disabled]){transform:translateY(-2px) scale(1.01);box-shadow:var(--shadow-lift)}
+.level-card[disabled]{opacity:.55;cursor:not-allowed}
+.level-glyph{
+  width:56px;height:56px;flex:none;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(140deg,#FBF4EA,#F6E7DF);border:1px solid var(--line);
+  font-family:'Noto Sans Thai',sans-serif;font-size:26px;font-weight:700;color:var(--ink)
+}
+.level-meta{flex:1;min-width:0}
+.level-meta .t{font-family:'Rubik',sans-serif;font-weight:600;font-size:15px}
+.level-meta .s{font-size:12px;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{height:6px;background:#EFEAE3;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar > i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--accent));transition:width .5s ease}
+.badge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:99px;background:#F1ECE5;color:var(--ink-soft)}
+.badge.mastered{background:rgba(107,184,107,.16);color:#417F41}
+.badge.learning{background:rgba(212,165,116,.22);color:#8A6234}
+
+/* ---------- lesson ---------- */
+.lesson-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.qbar{flex:1;height:10px;background:#EFEAE3;border-radius:99px;overflow:hidden}
+.qbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));width:0;transition:width .35s ease}
+.hearts{font-size:14px;letter-spacing:2px}
+
+.prompt-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
+  padding:28px 20px;text-align:center;margin-bottom:16px;
+}
+.prompt-kicker{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:14px}
+.prompt-th{font-family:'Noto Sans Thai',sans-serif;font-weight:700;line-height:1.3;word-break:break-word}
+.prompt-th.glyph{font-size:88px;line-height:1}
+.prompt-th.word{font-size:44px}
+.prompt-th.phrase{font-size:30px}
+.prompt-en{font-family:'Rubik',sans-serif;font-size:26px;font-weight:600}
+.prompt-sub{color:var(--ink-soft);margin-top:10px;font-size:13px}
+
+.options{display:grid;gap:10px;grid-template-columns:1fr}
+.opt{
+  display:flex;align-items:center;gap:12px;text-align:left;width:100%;min-height:56px;
+  background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:10px 14px;
+  transition:transform .12s ease,border-color .12s ease,background .12s ease;
+}
+.opt:hover:not([disabled]){border-color:var(--gold);transform:translateY(-1px)}
+.opt .key{
+  width:26px;height:26px;flex:none;border-radius:7px;background:#F1ECE5;display:grid;place-items:center;
+  font-size:11px;font-weight:700;color:var(--ink-soft)
+}
+.opt .body{flex:1;min-width:0}
+.opt .th{font-family:'Noto Sans Thai',sans-serif;font-size:24px;font-weight:600;line-height:1.35}
+.opt .en{font-weight:600}
+.opt .rom{font-size:12px;color:var(--ink-soft)}
+.opt.correct{border-color:var(--green);background:rgba(107,184,107,.12)}
+.opt.wrong{border-color:var(--accent);background:rgba(232,93,117,.10);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+.tiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:56px;
+  padding:12px;border:1.5px dashed var(--line);border-radius:var(--r);background:#FCFAF7}
+.tile{
+  font-family:'Noto Sans Thai',sans-serif;font-size:20px;font-weight:600;
+  background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;min-height:44px;
+  box-shadow:0 2px 0 var(--line);transition:transform .1s ease
+}
+.tile:hover:not([disabled]){border-color:var(--gold)}
+.tile:active{transform:translateY(2px);box-shadow:none}
+.answer-input{
+  width:100%;height:52px;border:none;border-bottom:2px solid var(--gold);background:transparent;
+  font-family:'Inter',sans-serif;font-size:20px;text-align:center;color:var(--ink);
+}
+.answer-input:focus{outline:none;border-bottom-color:var(--accent)}
+
+.feedback{border-radius:var(--r);padding:14px 16px;margin-top:14px;display:none;font-weight:500}
+.feedback.on{display:block;animation:rise .25s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.feedback .head{font-family:'Rubik',sans-serif;font-weight:700;margin-bottom:2px}
+.feedback.ok{background:rgba(107,184,107,.14);color:#37633A}
+.feedback.no{background:rgba(232,93,117,.12);color:#9C2F44}
+.feedback.hint{background:rgba(244,164,96,.16);color:#8A5A21}
+
+.lesson-actions{display:flex;gap:10px;align-items:center;margin-top:18px}
+.kbd-hint{font-size:11px;color:var(--ink-soft);display:none}
+@media(hover:hover) and (pointer:fine){.kbd-hint{display:block}}
+
+.speak{
+  width:76px;height:76px;border-radius:50%;background:linear-gradient(140deg,var(--gold),var(--accent));
+  color:#fff;display:grid;place-items:center;margin:0 auto;box-shadow:var(--shadow-lift);
+}
+.speak:hover{filter:brightness(1.05)}
+.speak svg{width:32px;height:32px}
+
+/* ---------- summary ---------- */
+.summary{text-align:center;padding:14px 0}
+.summary h1{font-size:28px;margin:16px 0 6px}
+.summary p{color:var(--ink-soft);margin:0 0 22px}
+.reward-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.reward{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 18px;box-shadow:var(--shadow)}
+.reward .n{font-family:'Rubik',sans-serif;font-weight:700;font-size:20px}
+.reward .l{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.review-list{display:grid;gap:8px;text-align:left;max-width:520px;margin:0 auto 24px}
+.review-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.review-item .th{font-family:'Noto Sans Thai',sans-serif;font-size:22px;font-weight:600}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));
+}
+.nav button{flex:1;min-height:52px;display:grid;place-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--ink-soft);border-radius:10px}
+.nav button[aria-current="page"]{color:var(--accent)}
+.nav svg{width:20px;height:20px}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
+
+@media (min-width:600px){
+  body{font-size:16px}
+  h1{font-size:32px} h2{font-size:24px} h3{font-size:18px}
+  #app{padding:0 32px 96px}
+  .levels{grid-template-columns:1fr 1fr}
+  .options{grid-template-columns:1fr 1fr}
+  .options.stack{grid-template-columns:1fr}
+  .prompt-th.glyph{font-size:120px}
+  .prompt-th.word{font-size:56px}
+  .prompt-th.phrase{font-size:38px}
+}
+@media (min-width:900px){
+  .hero{grid-template-columns:1.25fr .75fr;gap:40px}
+  .hero h1{font-size:44px}
+  .levels{grid-template-columns:repeat(3,1fr)}
+  .topnav{display:flex}
+  .nav-wrap{display:none}
+  #app{padding-bottom:48px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+</style>
+
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="mark thai">ก</span> Rian Thai</div>
+    <nav class="topnav" id="topnav" aria-label="Sections"></nav>
+    <div class="spacer"></div>
+    <span class="pill" id="pillStreak" title="Days in a row">🔥 <span>0</span></span>
+    <span class="pill" id="pillXP" title="Total XP">✦ <span>0</span></span>
+  </header>
+
+  <!-- ===== HOME ===== -->
+  <section class="screen on" id="screen-home">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Start with the letters</div>
+        <h1>Read Thai before you speak it.</h1>
+        <p>Forty-four consonants, a hundred everyday words, and the phrases you'll actually use in a market. Short sessions, one screen at a time.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" id="btnContinue">Start learning</button>
+          <button class="btn btn-ghost btn-lg" data-go="hub">Browse levels</button>
+        </div>
+      </div>
+      <div class="ring-wrap" id="homeRing"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n" id="statChars">0</div><div class="l">Letters</div></div>
+      <div class="stat"><div class="n" id="statWords">0</div><div class="l">Words</div></div>
+      <div class="stat"><div class="n" id="statPhrases">0</div><div class="l">Phrases</div></div>
+    </div>
+
+    <h2 style="margin:28px 0 12px">Pick up where you left off</h2>
+    <div class="levels" id="homeNext"></div>
+
+    <div class="card" style="margin-top:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="flex:1;min-width:220px">
+        <h3>Mixed review</h3>
+        <div style="color:var(--ink-soft);font-size:13px">Ten questions drawn from everything you've studied so far.</div>
+      </div>
+      <button class="btn btn-accent" id="btnSprint">Start review</button>
+    </div>
+  </section>
+
+  <!-- ===== HUB ===== -->
+  <section class="screen" id="screen-hub">
+    <h1>Levels</h1>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <p class="track-note" id="trackNote"></p>
+    <div class="levels" id="levelList"></div>
+  </section>
+
+  <!-- ===== LESSON ===== -->
+  <section class="screen" id="screen-lesson">
+    <div class="lesson-top">
+      <button class="btn btn-quiet" id="btnQuit">← Leave</button>
+      <div class="qbar"><i id="qbarFill"></i></div>
+      <div class="hearts" id="hearts"></div>
+    </div>
+    <div id="lessonBody"></div>
+    <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+    <div class="lesson-actions">
+      <button class="btn btn-primary btn-lg" id="btnCheck" style="flex:1">Check</button>
+      <span class="kbd-hint" id="kbdHint">Enter to check · 1–4 to pick</span>
+    </div>
+  </section>
+
+  <!-- ===== SUMMARY ===== -->
+  <section class="screen" id="screen-done">
+    <div class="summary">
+      <div class="ring-wrap" id="doneRing"></div>
+      <h1 id="doneTitle">Lesson complete</h1>
+      <p id="doneSub"></p>
+      <div class="reward-row" id="rewards"></div>
+      <div class="review-list" id="reviewList"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary btn-lg" id="btnAgain">Practice again</button>
+        <button class="btn btn-ghost btn-lg" data-go="hub">Back to levels</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="nav-wrap"><nav class="nav" id="nav"></nav></div>
+</div>
+<canvas id="confetti"></canvas>
+
+<script>
+/* =========================================================
+   CONTENT
+   ========================================================= */
+const CONSONANTS = [
+  ["ก","ko kai","chicken","mid"],["ข","kho khai","egg","high"],["ฃ","kho khuat","bottle","high"],
+  ["ค","kho khwai","buffalo","low"],["ฅ","kho khon","person","low"],["ฆ","kho rakhang","bell","low"],
+  ["ง","ngo ngu","snake","low"],["จ","cho chan","plate","mid"],["ฉ","cho ching","cymbals","high"],
+  ["ช","cho chang","elephant","low"],["ซ","so so","chain","low"],["ฌ","cho choe","bush","low"],
+  ["ญ","yo ying","woman","low"],["ฎ","do chada","headdress","mid"],["ฏ","to patak","goad","mid"],
+  ["ฐ","tho san than","pedestal","high"],["ฑ","tho montho","Montho","low"],["ฒ","tho phu thao","elder","low"],
+  ["ณ","no nen","novice monk","low"],["ด","do dek","child","mid"],["ต","to tao","turtle","mid"],
+  ["ถ","tho thung","sack","high"],["ท","tho thahan","soldier","low"],["ธ","tho thong","flag","low"],
+  ["น","no nu","mouse","low"],["บ","bo baimai","leaf","mid"],["ป","po pla","fish","mid"],
+  ["ผ","pho phueng","bee","high"],["ฝ","fo fa","lid","high"],["พ","pho phan","tray","low"],
+  ["ฟ","fo fan","teeth","low"],["ภ","pho samphao","sailboat","low"],["ม","mo ma","horse","low"],
+  ["ย","yo yak","giant","low"],["ร","ro ruea","boat","low"],["ล","lo ling","monkey","low"],
+  ["ว","wo waen","ring","low"],["ศ","so sala","pavilion","high"],["ษ","so ruesi","hermit","high"],
+  ["ส","so suea","tiger","high"],["ห","ho hip","chest","high"],["ฬ","lo chula","kite","low"],
+  ["อ","o ang","basin","mid"],["ฮ","ho nokhuk","owl","low"]
+].map(([th,rom,en,cls],i)=>({id:"c"+i,track:"chars",th,rom,en,extra:cls+" class"}));
+
+const WORDS = [
+  /* greetings & people */
+  ["สวัสดี","sawatdee","hello"],["ขอบคุณ","khopkhun","thank you"],["ใช่","chai","yes"],["ไม่","mai","no / not"],
+  ["ผม","phom","I (male)"],["ฉัน","chan","I (female)"],["คุณ","khun","you"],["ครับ","khrap","polite (male)"],
+  /* numbers 1–8 */
+  ["หนึ่ง","nueng","one"],["สอง","song","two"],["สาม","sam","three"],["สี่","si","four"],
+  ["ห้า","ha","five"],["หก","hok","six"],["เจ็ด","jet","seven"],["แปด","paet","eight"],
+  /* counting & money */
+  ["เก้า","kao","nine"],["สิบ","sip","ten"],["ร้อย","roi","hundred"],["พัน","phan","thousand"],
+  ["บาท","baht","baht"],["เท่าไหร่","thao rai","how much"],["ซื้อ","sue","to buy"],["แพง","phaeng","expensive"],
+  /* food */
+  ["น้ำ","nam","water"],["ข้าว","khao","rice"],["อาหาร","ahan","food"],["กิน","kin","to eat"],
+  ["ผัด","phat","stir-fried"],["ไก่","kai","chicken"],["หมู","mu","pork"],["กุ้ง","kung","shrimp"],
+  /* taste & temperature */
+  ["เผ็ด","phet","spicy"],["อร่อย","aroi","delicious"],["หวาน","wan","sweet"],["เค็ม","khem","salty"],
+  ["เปรี้ยว","priao","sour"],["ร้อน","ron","hot"],["เย็น","yen","cool"],["น้ำแข็ง","nam khaeng","ice"],
+  /* getting around */
+  ["ไป","pai","to go"],["มา","ma","to come"],["บ้าน","ban","house"],["ตลาด","talat","market"],
+  ["รถ","rot","car"],["ถนน","thanon","road"],["ที่ไหน","thi nai","where"],["วันนี้","wan ni","today"],
+  /* people & feelings */
+  ["คน","khon","person"],["เพื่อน","phuean","friend"],["แม่","mae","mother"],["พ่อ","pho","father"],
+  ["หมา","maa","dog"],["แมว","maeo","cat"],["รัก","rak","to love"],["ดี","di","good"],
+  /* describing things */
+  ["สวย","suai","beautiful"],["ใหญ่","yai","big"],["เล็ก","lek","small"],["ใหม่","mai","new"],
+  ["เก่า","kao","old"],["มาก","mak","very"],["นิดหน่อย","nit noi","a little"],["ช้า","cha","slow"]
+].map(([th,rom,en],i)=>({id:"w"+i,track:"words",th,rom,en}));
+
+const PHRASES = [
+  ["สวัสดีครับ","sawatdee khrap","Hello (said by a man)",["สวัสดี","ครับ"]],
+  ["สบายดีไหม","sabai di mai","How are you?",["สบาย","ดี","ไหม"]],
+  ["สบายดีครับ","sabai di khrap","I'm well, thanks",["สบาย","ดี","ครับ"]],
+  ["ขอบคุณมาก","khopkhun mak","Thank you very much",["ขอบคุณ","มาก"]],
+  ["ไม่เป็นไร","mai pen rai","It's nothing / no worries",["ไม่","เป็น","ไร"]],
+  ["ขอโทษครับ","khothot khrap","Sorry / excuse me",["ขอโทษ","ครับ"]],
+  ["ยินดีที่ได้รู้จัก","yindi thi dai ruchak","Nice to meet you",["ยินดี","ที่ได้","รู้จัก"]],
+  ["ผมชื่อจอห์น","phom chue John","My name is John",["ผม","ชื่อ","จอห์น"]],
+  ["นี่เท่าไหร่","ni thao rai","How much is this?",["นี่","เท่าไหร่"]],
+  ["แพงไป","phaeng pai","Too expensive",["แพง","ไป"]],
+  ["ลดได้ไหม","lot dai mai","Can you lower the price?",["ลด","ได้","ไหม"]],
+  ["ห้องน้ำอยู่ที่ไหน","hongnam yu thi nai","Where is the bathroom?",["ห้องน้ำ","อยู่","ที่ไหน"]],
+  ["ผมไม่เข้าใจ","phom mai khaochai","I don't understand",["ผม","ไม่","เข้าใจ"]],
+  ["พูดช้าๆได้ไหม","phut cha cha dai mai","Could you speak slowly?",["พูด","ช้าๆ","ได้","ไหม"]],
+  ["ไม่เผ็ดนะครับ","mai phet na khrap","Not spicy, please",["ไม่","เผ็ด","นะครับ"]],
+  ["อร่อยมาก","aroi mak","Very delicious",["อร่อย","มาก"]],
+  ["ผมหิวข้าว","phom hiu khao","I'm hungry",["ผม","หิว","ข้าว"]],
+  ["ขอน้ำหนึ่งขวด","kho nam nueng khuat","One bottle of water, please",["ขอ","น้ำ","หนึ่ง","ขวด"]],
+  ["วันนี้อากาศร้อน","wan ni akat ron","It's hot today",["วันนี้","อากาศ","ร้อน"]],
+  ["ผมชอบอาหารไทย","phom chop ahan thai","I like Thai food",["ผม","ชอบ","อาหารไทย"]],
+  ["ไปตลาดกันไหม","pai talat kan mai","Shall we go to the market?",["ไป","ตลาด","กัน","ไหม"]],
+  ["แล้วเจอกัน","laeo choe kan","See you later",["แล้ว","เจอ","กัน"]]
+].map(([th,rom,en,parts],i)=>({id:"p"+i,track:"phrases",th,rom,en,parts}));
+
+const TRACKS = {
+  chars:{name:"Letters",note:"The 44 consonants, grouped the way Thai children learn them — each letter carries a word that fixes its sound.",items:CONSONANTS,per:8,label:i=>"Letters "+(i*8+1)+"–"+Math.min((i+1)*8,CONSONANTS.length)},
+  words:{name:"Words",note:"Everyday vocabulary: numbers, food, people, places. Enough to order lunch and ask the price.",items:WORDS,per:8,label:i=>["Greetings & people","Numbers 1–8","Counting & money","Food","Taste & temperature","Getting around","People & feelings","Describing things"][i]||"Words "+(i+1)},
+  phrases:{name:"Phrases",note:"Whole sentences you can say out loud. Tap any Thai text to hear it.",items:PHRASES,per:6,label:i=>["First conversations","At the market","Out and about","Small talk"][i]||"Phrases "+(i+1)}
+};
+const ALL = [...CONSONANTS,...WORDS,...PHRASES];
+const byId = Object.fromEntries(ALL.map(x=>[x.id,x]));
+
+function levelsOf(track){
+  const t=TRACKS[track], out=[];
+  for(let i=0;i<Math.ceil(t.items.length/t.per);i++){
+    out.push({id:track+"_"+i, track, index:i, title:t.label(i), items:t.items.slice(i*t.per,(i+1)*t.per)});
+  }
+  return out;
+}
+const LEVELS = {chars:levelsOf("chars"),words:levelsOf("words"),phrases:levelsOf("phrases")};
+const levelById = Object.fromEntries([...LEVELS.chars,...LEVELS.words,...LEVELS.phrases].map(l=>[l.id,l]));
+
+/* =========================================================
+   STATE + PERSISTENCE
+   ========================================================= */
+const KEY="rianthai_state_v1";
+let S = {xp:0, streak:0, lastActive:null, progress:{}, done:{}, sound:true};
+
+async function load(){
+  try{
+    const r = await window.storage.get(KEY);
+    if(r && r.value) S = Object.assign(S, JSON.parse(r.value));
+  }catch(e){ /* first run or storage unavailable — start fresh */ }
+  rollStreak();
+}
+let saveTimer=null;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    try{ await window.storage.set(KEY, JSON.stringify(S)); }catch(e){}
+  },150);
+}
+function today(){ return new Date().toISOString().slice(0,10); }
+function rollStreak(){
+  const t=today();
+  if(S.lastActive===t) return;
+  if(!S.lastActive){ return; }
+  const diff=(new Date(t)-new Date(S.lastActive))/86400000;
+  if(diff>1) S.streak=0;
+}
+function touchDay(){
+  const t=today();
+  if(S.lastActive!==t){
+    const diff = S.lastActive ? (new Date(t)-new Date(S.lastActive))/86400000 : 99;
+    S.streak = (diff===1)? S.streak+1 : 1;
+    S.lastActive=t;
+  }
+}
+const MASTERY=["new","learning","familiar","mastered"];
+function mastery(id){ return (S.progress[id]&&S.progress[id].m)||0; }
+function bump(id,correct){
+  const p = S.progress[id] || (S.progress[id]={m:0,seen:0,right:0});
+  p.seen++;
+  if(correct){ p.right++; p.m=Math.min(3,p.m+1); } else { p.m=Math.max(0,p.m-1); }
+}
+function levelPct(l){
+  const total=l.items.length*3;
+  const got=l.items.reduce((a,it)=>a+mastery(it.id),0);
+  return Math.round(100*got/total);
+}
+function trackPct(track){
+  const items=TRACKS[track].items;
+  return Math.round(100*items.reduce((a,it)=>a+mastery(it.id),0)/(items.length*3));
+}
+function countMastered(track){ return TRACKS[track].items.filter(it=>mastery(it.id)>=3).length; }
+function unlocked(l){ return l.index===0 || !!S.done[l.track+"_"+(l.index-1)]; }
+function nextLevel(){
+  for(const tr of ["chars","words","phrases"]){
+    for(const l of LEVELS[tr]) if(levelPct(l)<100 && unlocked(l)) return l;
+  }
+  return LEVELS.chars[0];
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const n=document.createElement(t); if(c)n.className=c; if(h!=null)n.innerHTML=h; return n;};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const sample=(arr,n,not)=>shuffle(arr.filter(x=>!not||x.id!==not.id)).slice(0,n);
+const reduced = matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+function ring(size,pct,big,label){
+  const r=(size-14)/2, c=2*Math.PI*r, id="g"+Math.random().toString(36).slice(2,7);
+  const w=el("div","ring-wrap");
+  w.innerHTML=`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${label}: ${pct}% complete">
+    <defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D4A574"/><stop offset="100%" stop-color="#E85D75"/></linearGradient></defs>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#EFEAE3" stroke-width="12"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="url(#${id})" stroke-width="12"
+      stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct/100)}"
+      transform="rotate(-90 ${size/2} ${size/2})" style="transition:stroke-dashoffset .8s ease"/>
+  </svg><div class="ring-center"><div class="big">${big}</div><div class="lbl">${label}</div></div>`;
+  return w;
+}
+
+/* audio */
+let AC=null;
+function beep(ok){
+  if(!S.sound) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const now=AC.currentTime;
+    (ok?[660,880]:[300,220]).forEach((f,i)=>{
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type="sine"; o.frequency.value=f;
+      g.gain.setValueAtTime(.0001,now+i*.09);
+      g.gain.exponentialRampToValueAtTime(.12,now+i*.09+.02);
+      g.gain.exponentialRampToValueAtTime(.0001,now+i*.09+.22);
+      o.connect(g); g.connect(AC.destination); o.start(now+i*.09); o.stop(now+i*.09+.25);
+    });
+  }catch(e){}
+}
+let thaiVoice=null;
+function pickVoice(){
+  const v=speechSynthesis.getVoices();
+  thaiVoice = v.find(x=>/th[-_]TH/i.test(x.lang)) || v.find(x=>/^th/i.test(x.lang)) || null;
+}
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text){
+  if(!("speechSynthesis" in window)) return false;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang="th-TH"; u.rate=.8;
+    if(thaiVoice) u.voice=thaiVoice;
+    speechSynthesis.speak(u);
+    return !!thaiVoice;
+  }catch(e){ return false; }
+}
+
+/* confetti */
+const cvs=$("#confetti"), ctx=cvs.getContext("2d");
+function celebrate(){
+  if(reduced) return;
+  cvs.width=innerWidth; cvs.height=innerHeight;
+  const cols=["#D4A574","#E85D75","#6BB86B","#F4A460"];
+  const bits=Array.from({length:90},()=>({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.4,
+    r:4+Math.random()*6,vy:2+Math.random()*3.5,vx:-1.2+Math.random()*2.4,a:Math.random()*6.28,
+    va:-.15+Math.random()*.3,c:cols[Math.random()*cols.length|0]}));
+  let frames=0;
+  (function tick(){
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+    bits.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.a+=b.va;
+      ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.a);ctx.fillStyle=b.c;
+      ctx.fillRect(-b.r/2,-b.r/2,b.r,b.r*1.6);ctx.restore();});
+    if(frames++<190) requestAnimationFrame(tick); else ctx.clearRect(0,0,cvs.width,cvs.height);
+  })();
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+const NAV=[
+  ["home","Home",'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>'],
+  ["hub","Levels",'<rect x="3" y="4" width="7" height="7" rx="2"/><rect x="14" y="4" width="7" height="7" rx="2"/><rect x="3" y="13" width="7" height="7" rx="2"/><rect x="14" y="13" width="7" height="7" rx="2"/>'],
+  ["review","Review",'<path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/>']
+];
+$("#nav").innerHTML=NAV.map(([k,l,p])=>
+  `<button data-nav="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>${l}</button>`).join("");
+$("#topnav").innerHTML=NAV.map(([k,l])=>`<button data-nav="${k}">${l}</button>`).join("");
+
+let current="home";
+function go(name){
+  if(name==="review"){ startSprint(); return; }
+  current=name;
+  document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id==="screen-"+name));
+  document.querySelectorAll("[data-nav]").forEach(b=>{
+    const on = b.dataset.nav===name || (name==="lesson"&&b.dataset.nav==="hub");
+    b.setAttribute("aria-current", on?"page":"false");
+  });
+  scrollTo({top:0,behavior:reduced?"auto":"smooth"});
+  if(name==="home") renderHome();
+  if(name==="hub") renderHub();
+}
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]"); if(g) go(g.dataset.go);
+  const n=e.target.closest("[data-nav]"); if(n) go(n.dataset.nav);
+});
+
+/* =========================================================
+   HOME
+   ========================================================= */
+function renderHome(){
+  $("#pillStreak").lastElementChild.textContent=S.streak;
+  $("#pillXP").lastElementChild.textContent=S.xp;
+  const overall=Math.round(100*ALL.reduce((a,i)=>a+mastery(i.id),0)/(ALL.length*3));
+  const rw=$("#homeRing"); rw.innerHTML="";
+  rw.appendChild(ring(innerWidth<600?150:190, overall, overall+"%", "Overall"));
+  $("#statChars").textContent=countMastered("chars")+" / 44";
+  $("#statWords").textContent=countMastered("words")+" / "+WORDS.length;
+  $("#statPhrases").textContent=countMastered("phrases")+" / "+PHRASES.length;
+
+  const nl=nextLevel();
+  $("#btnContinue").textContent = S.xp>0 ? "Continue: "+nl.title : "Start learning";
+  const box=$("#homeNext"); box.innerHTML="";
+  const picks=[nl];
+  for(const tr of ["chars","words","phrases"]){
+    const l=LEVELS[tr].find(l=>unlocked(l)&&levelPct(l)<100);
+    if(l && !picks.some(p=>p.id===l.id)) picks.push(l);
+  }
+  picks.slice(0,3).forEach(l=>box.appendChild(levelCard(l)));
+
+  const seen=ALL.filter(i=>mastery(i.id)>0).length;
+  const sp=$("#btnSprint");
+  sp.disabled = seen<4;
+  sp.textContent = seen<4 ? "Finish a level first" : "Start review";
+}
+
+function levelCard(l){
+  const pct=levelPct(l), open=unlocked(l);
+  const b=el("button","level-card");
+  if(!open) b.disabled=true;
+  const state = pct===100?"mastered":(pct>0?"learning":"");
+  b.innerHTML=`
+    <div class="level-glyph">${open?l.items[0].th.slice(0,2):"🔒"}</div>
+    <div class="level-meta">
+      <div class="t">${l.title}</div>
+      <div class="s">${open ? l.items.slice(0,4).map(i=>i.en).join(" · ") : "Finish the level before this one"}</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+    </div>
+    <span class="badge ${state}">${open? (pct===100?"Mastered":pct+"%") : "Locked"}</span>`;
+  b.onclick=()=>startLesson(l);
+  return b;
+}
+
+/* =========================================================
+   HUB
+   ========================================================= */
+let activeTrack="chars";
+$("#tabs").innerHTML=Object.entries(TRACKS).map(([k,t])=>
+  `<button class="tab" role="tab" data-track="${k}" aria-selected="${k==='chars'}">${t.name}</button>`).join("");
+$("#tabs").onclick=e=>{const b=e.target.closest("[data-track]"); if(!b)return; activeTrack=b.dataset.track; renderHub();};
+
+function renderHub(){
+  document.querySelectorAll("[data-track]").forEach(b=>b.setAttribute("aria-selected", b.dataset.track===activeTrack));
+  $("#trackNote").textContent=TRACKS[activeTrack].note+" — "+trackPct(activeTrack)+"% mastered.";
+  const list=$("#levelList"); list.innerHTML="";
+  LEVELS[activeTrack].forEach(l=>list.appendChild(levelCard(l)));
+}
+
+/* =========================================================
+   LESSON ENGINE
+   ========================================================= */
+let L=null; // live lesson
+
+function makeQuestion(item, pool){
+  const kinds = item.track==="chars" ? ["th2en","en2th","audio"]
+              : item.track==="words" ? ["th2en","en2th","audio","type"]
+              : ["th2en","en2th","order"];
+  // steer by mastery: recognition first, recall later
+  const m=mastery(item.id);
+  const kind = m===0 ? "th2en" : kinds[Math.random()*kinds.length|0];
+  const wrong = sample(pool.length>=6?pool:ALL.filter(x=>x.track===item.track), 3, item);
+  return {item, kind, options: shuffle([item,...wrong])};
+}
+
+function buildQueue(items, n){
+  const pool=TRACKS[items[0].track].items;
+  const weighted=shuffle(items).sort((a,b)=>mastery(a.id)-mastery(b.id));
+  const q=[];
+  while(q.length<n) weighted.forEach(it=>{ if(q.length<n) q.push(makeQuestion(it,pool)); });
+  return q;
+}
+
+function startLesson(level){
+  L={level, queue:buildQueue(level.items, Math.max(8,level.items.length)), i:0, right:0,
+     hearts:3, missed:[], xp:0, sprint:false};
+  go("lesson"); renderQ();
+}
+function startSprint(){
+  const seen=ALL.filter(i=>mastery(i.id)>0);
+  if(seen.length<4){ go("hub"); return; }
+  const items=shuffle(seen).slice(0,10);
+  const q=items.map(it=>makeQuestion(it, TRACKS[it.track].items));
+  L={level:{id:"sprint",title:"Mixed review",track:"chars",items},queue:q,i:0,right:0,hearts:3,missed:[],xp:0,sprint:true};
+  go("lesson"); renderQ();
+}
+
+let answered=false, picked=null, tileState=null;
+
+function renderQ(){
+  answered=false; picked=null; tileState=null;
+  const q=L.queue[L.i], it=q.item;
+  $("#qbarFill").style.width=(100*L.i/L.queue.length)+"%";
+  $("#hearts").textContent="♥".repeat(L.hearts)+"♡".repeat(3-L.hearts);
+  $("#hearts").style.color=L.hearts>1?"var(--gold)":"var(--accent)";
+  const fb=$("#feedback"); fb.className="feedback"; fb.innerHTML="";
+  const check=$("#btnCheck"); check.textContent="Check"; check.className="btn btn-primary btn-lg"; check.disabled=true;
+
+  const body=$("#lessonBody"); body.innerHTML="";
+  const sizeClass = it.track==="chars"?"glyph":(it.track==="words"?"word":"phrase");
+
+  if(q.kind==="th2en"){
+    body.appendChild(promptCard(
+      it.track==="chars"?"Which letter is this?":"What does this mean?",
+      `<div class="prompt-th ${sizeClass}">${it.th}</div>`, it));
+    body.appendChild(optionList(q, o=>
+      `<div class="body"><div class="en">${it.track==="chars"?o.rom:o.en}</div>
+       <div class="rom">${it.track==="chars"?o.en:o.rom}</div></div>`, it.track!=="chars"));
+    $("#kbdHint").textContent="Enter to check · 1–4 to pick";
+  }
+  else if(q.kind==="en2th"){
+    body.appendChild(promptCard("Choose the Thai",
+      `<div class="prompt-en">${it.track==="chars"?it.rom:it.en}</div>
+       ${it.track==="chars"?`<div class="prompt-sub">the letter for “${it.en}”</div>`:""}`, null));
+    body.appendChild(optionList(q, o=>
+      `<div class="body"><div class="th">${o.th}</div></div>`, it.track!=="chars"));
+  }
+  else if(q.kind==="audio"){
+    const p=el("div","prompt-card");
+    p.innerHTML=`<div class="prompt-kicker">Listen, then choose</div>`;
+    const btn=el("button","speak");
+    btn.setAttribute("aria-label","Play the audio again");
+    btn.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/><path d="M19.5 6a8.5 8.5 0 0 1 0 12"/></svg>`;
+    btn.onclick=()=>playPrompt(it,p);
+    p.appendChild(btn);
+    p.appendChild(el("div","prompt-sub","Tap to hear it again"));
+    body.appendChild(p);
+    body.appendChild(optionList(q,o=>`<div class="body"><div class="th">${o.th}</div></div>`, it.track!=="chars"));
+    setTimeout(()=>playPrompt(it,p),250);
+  }
+  else if(q.kind==="type"){
+    body.appendChild(promptCard("Type the sound in Latin letters",
+      `<div class="prompt-th ${sizeClass}">${it.th}</div><div class="prompt-sub">“${it.en}”</div>`, it));
+    const wrap=el("div","card");
+    const inp=el("input","answer-input"); inp.id="typeIn"; inp.autocomplete="off"; inp.spellcheck=false;
+    inp.setAttribute("aria-label","Romanised spelling");
+    inp.placeholder="e.g. sawatdee";
+    inp.oninput=()=>{ picked=inp.value.trim(); $("#btnCheck").disabled=!picked; };
+    wrap.appendChild(inp); body.appendChild(wrap);
+    setTimeout(()=>inp.focus(),60);
+    $("#kbdHint").textContent="Enter to check";
+  }
+  else if(q.kind==="order"){
+    body.appendChild(promptCard("Build the phrase",
+      `<div class="prompt-en">${it.en}</div>`, null));
+    const built=el("div","tiles"); built.id="built";
+    const bank=el("div","tiles"); bank.id="bank"; bank.style.marginTop="10px";
+    tileState={built:[],bank:shuffle(it.parts.map((t,i)=>({t,i})))};
+    const draw=()=>{
+      built.innerHTML=""; bank.innerHTML="";
+      if(!tileState.built.length) built.appendChild(el("div","prompt-sub","Tap the words in order"));
+      tileState.built.forEach((x,idx)=>{
+        const b=el("button","tile",x.t);
+        b.onclick=()=>{ if(answered)return; tileState.bank.push(...tileState.built.splice(idx,1)); draw(); };
+        built.appendChild(b);
+      });
+      tileState.bank.forEach((x,idx)=>{
+        const b=el("button","tile",x.t);
+        b.onclick=()=>{ if(answered)return; tileState.built.push(...tileState.bank.splice(idx,1)); draw(); };
+        bank.appendChild(b);
+      });
+      picked=tileState.built.map(x=>x.t).join("");
+      $("#btnCheck").disabled = tileState.bank.length>0;
+    };
+    body.appendChild(built); body.appendChild(bank); draw();
+    $("#kbdHint").textContent="Enter to check";
+  }
+}
+
+function promptCard(kicker, inner, speakItem){
+  const p=el("div","prompt-card");
+  p.innerHTML=`<div class="prompt-kicker">${kicker}</div>${inner}`;
+  if(speakItem){
+    const s=el("button","btn btn-quiet","🔊 Hear it");
+    s.style.marginTop="10px";
+    s.onclick=()=>playPrompt(speakItem,p);
+    p.appendChild(s);
+  }
+  return p;
+}
+function playPrompt(item,host){
+  const ok = speak(item.track==="chars"? item.th+" "+item.th : item.th);
+  if(!ok){
+    if(!host.querySelector(".novoice")){
+      const n=el("div","prompt-sub novoice",`No Thai voice on this device — the sound is <strong>${item.rom}</strong>.`);
+      host.appendChild(n);
+    }
+  }
+}
+
+function optionList(q, tpl, stack){
+  const wrap=el("div","options"+(stack?" stack":""));
+  q.options.forEach((o,i)=>{
+    const b=el("button","opt");
+    b.innerHTML=`<span class="key">${i+1}</span>`+tpl(o);
+    b.onclick=()=>{ if(answered)return;
+      wrap.querySelectorAll(".opt").forEach(x=>x.style.borderColor="");
+      b.style.borderColor="var(--gold)"; picked=o; $("#btnCheck").disabled=false; };
+    b.dataset.optId=o.id;
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+
+function checkAnswer(){
+  const q=L.queue[L.i], it=q.item;
+  let ok=false;
+  if(q.kind==="type"){
+    const norm=s=>s.toLowerCase().replace(/[^a-z]/g,"");
+    ok = norm(String(picked||""))===norm(it.rom);
+  } else if(q.kind==="order"){
+    ok = picked===it.parts.join("");
+  } else {
+    ok = picked && picked.id===it.id;
+  }
+  answered=true;
+  bump(it.id, ok);
+  const fb=$("#feedback");
+  if(ok){
+    L.right++; L.xp+=10; beep(true);
+    fb.className="feedback ok on";
+    fb.innerHTML=`<div class="head">Correct</div>${it.th} — ${it.rom} — ${it.en}`;
+  }else{
+    L.hearts=Math.max(0,L.hearts-1); L.missed.push(it); beep(false);
+    fb.className="feedback no on";
+    fb.innerHTML=`<div class="head">Not quite</div>It's <span class="thai" style="font-size:1.2em">${it.th}</span> — ${it.rom} — ${it.en}`;
+  }
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled=true; b.style.borderColor="";
+    if(b.dataset.optId===it.id) b.classList.add("correct");
+    else if(picked&&picked.id&&b.dataset.optId===picked.id&&!ok) b.classList.add("wrong");
+  });
+  if(q.kind==="order"||q.kind==="type"){
+    document.querySelectorAll(".tile").forEach(t=>t.disabled=true);
+    const inp=$("#typeIn"); if(inp) inp.disabled=true;
+  }
+  const check=$("#btnCheck");
+  check.disabled=true;
+  setTimeout(()=>{
+    check.disabled=false;
+    check.textContent = L.hearts===0 ? "See results" : (L.i+1>=L.queue.length ? "Finish" : "Next");
+    check.className="btn btn-accent btn-lg";
+  }, reduced?100:700);
+}
+
+$("#btnCheck").onclick=()=>{
+  if(!answered){ checkAnswer(); return; }
+  if(L.hearts===0){ finish(false); return; }
+  L.i++;
+  if(L.i>=L.queue.length) finish(true); else renderQ();
+};
+$("#btnQuit").onclick=()=>{ save(); go(L&&L.sprint?"home":"hub"); };
+
+document.addEventListener("keydown",e=>{
+  if(current!=="lesson") return;
+  if(e.key==="Enter"){ e.preventDefault(); if(!$("#btnCheck").disabled) $("#btnCheck").click(); return; }
+  if(/^[1-4]$/.test(e.key) && !answered){
+    const opts=document.querySelectorAll(".opt");
+    const b=opts[+e.key-1]; if(b) b.click();
+  }
+});
+
+function finish(completed){
+  const pct=Math.round(100*L.right/L.queue.length);
+  let xp=L.xp;
+  if(pct===100){ xp+=50; }
+  S.xp+=xp; touchDay();
+  if(completed && pct>=70 && !L.sprint) S.done[L.level.id]=true;
+  save();
+
+  $("#doneRing").innerHTML=""; 
+  const rw=ring(innerWidth<600?140:170,pct,pct+"%","Score");
+  $("#doneRing").appendChild(rw);
+  if(!reduced) setTimeout(()=>rw.classList.add("pulse"),120);
+
+  const perfect = pct===100;
+  $("#doneTitle").textContent = perfect?"Perfect round" : (pct>=70?"Level complete":"Keep going");
+  $("#doneSub").textContent = perfect
+    ? "Every answer right. That level is yours."
+    : pct>=70 ? "Solid. The next level is open."
+    : "You got "+L.right+" of "+L.queue.length+". Run it again — repetition is the whole trick.";
+
+  $("#rewards").innerHTML=`
+    <div class="reward"><div class="n">+${xp}</div><div class="l">XP earned</div></div>
+    <div class="reward"><div class="n">${L.right}/${L.queue.length}</div><div class="l">Correct</div></div>
+    <div class="reward"><div class="n">${S.streak}</div><div class="l">Day streak</div></div>`;
+
+  const rl=$("#reviewList"); rl.innerHTML="";
+  const uniq=[...new Map(L.missed.map(i=>[i.id,i])).values()].slice(0,6);
+  if(uniq.length){
+    rl.appendChild(el("div","caption","Worth another look"));
+    uniq.forEach(i=>{
+      const r=el("div","review-item",
+        `<span class="th">${i.th}</span><div><div style="font-weight:600">${i.en}</div>
+         <div style="font-size:12px;color:var(--ink-soft)">${i.rom}</div></div>`);
+      r.style.cursor="pointer"; r.onclick=()=>speak(i.th);
+      rl.appendChild(r);
+    });
+  }
+  $("#btnAgain").onclick=()=> L.sprint? startSprint() : startLesson(L.level);
+  go("done");
+  if(perfect) celebrate();
+}
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+$("#btnContinue").onclick=()=>startLesson(nextLevel());
+$("#btnSprint").onclick=startSprint;
+addEventListener("resize",()=>{ if(current==="home") renderHome(); });
+
+load().then(()=>{ renderHome(); renderHub(); });
+</script>

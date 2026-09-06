@@ -1,0 +1,961 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เรียนไทย — Learn Thai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#D4A574;
+  --gold-deep:#B98A57;
+  --accent:#E85D75;
+  --green:#6BB86B;
+  --warn:#F4A460;
+  --dark:#2C3E50;
+  --dark-soft:#5A6B7B;
+  --light:#F8F6F3;
+  --card:#FFFFFF;
+  --line:rgba(44,62,80,.10);
+  --shadow:0 2px 8px rgba(44,62,80,.10);
+  --shadow-lift:0 8px 24px rgba(44,62,80,.14);
+  --r:12px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--light);
+  color:var(--dark);
+  font-family:Inter,'Noto Sans Thai',system-ui,sans-serif;
+  font-size:14px;line-height:1.5;
+  min-height:100vh;
+}
+.thai{font-family:'Noto Sans Thai',Inter,sans-serif}
+h1,h2,h3,.display{font-family:Rubik,'Noto Sans Thai',sans-serif;font-weight:600;letter-spacing:-.01em;margin:0}
+h1{font-size:24px}h2{font-size:18px}h3{font-size:16px}
+button{font:inherit;color:inherit;border:none;background:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* ---------- shell ---------- */
+#app{max-width:1180px;margin:0 auto;padding:16px 16px 92px}
+.screen{animation:fade .28s ease-out}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+.card + .card{margin-top:12px}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:0 20px;border-radius:8px;
+  font-family:Rubik,sans-serif;font-weight:600;font-size:15px;
+  background:var(--gold);color:var(--dark);
+  transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+  box-shadow:0 2px 0 var(--gold-deep);
+}
+.btn:hover{background:#dcb287}
+.btn:active{transform:translateY(2px);box-shadow:0 0 0 var(--gold-deep)}
+.btn.block{display:flex;width:100%}
+.btn.ghost{background:transparent;border:2px solid var(--gold);box-shadow:none;min-height:44px}
+.btn.ghost:hover{background:rgba(212,165,116,.14)}
+.btn.quiet{background:rgba(244,164,96,.22);box-shadow:none;color:var(--dark-soft);min-height:44px;font-size:14px}
+.btn.accent{background:var(--accent);color:#fff;box-shadow:0 2px 0 #c94a61}
+.btn.accent:hover{background:#ec6f84}
+.btn[disabled]{opacity:.45;pointer-events:none;box-shadow:none}
+
+/* ---------- top bar ---------- */
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:16px;min-height:44px}
+.iconbtn{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:20px;color:var(--dark-soft);flex:none}
+.iconbtn:hover{background:rgba(44,62,80,.06)}
+.topbar .title{flex:1;min-width:0}
+.topbar .title .k{font-family:Rubik,sans-serif;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .title .s{font-size:12px;color:var(--dark-soft)}
+
+/* ---------- home hero ---------- */
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:8px 0 4px}
+.hero .greet{font-family:'Noto Sans Thai',sans-serif;font-size:34px;font-weight:700;color:var(--dark)}
+.hero .sub{color:var(--dark-soft);max-width:34ch}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 8px;text-align:center}
+.stat b{display:block;font-family:Rubik,sans-serif;font-size:22px;line-height:1.2}
+.stat span{font-size:11px;color:var(--dark-soft);text-transform:uppercase;letter-spacing:.06em}
+
+/* ---------- progress ring ---------- */
+.ring-wrap{position:relative;width:150px;height:150px;margin:8px auto}
+.ring-wrap.lg{width:170px;height:170px}
+.ring-wrap svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring-track{fill:none;stroke:rgba(44,62,80,.08);stroke-width:11}
+.ring-bar{fill:none;stroke:url(#ringgrad);stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.3,.9,.3,1)}
+.ring-face{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:2px}
+.ring-face b{font-family:Rubik,sans-serif;font-size:30px;line-height:1}
+.ring-face span{font-size:11px;color:var(--dark-soft);text-transform:uppercase;letter-spacing:.08em}
+.pulse{animation:pulse .6s ease-out}
+@keyframes pulse{0%{transform:scale(1)}45%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+/* ---------- lanes / hub ---------- */
+.tabs{display:flex;gap:6px;background:rgba(44,62,80,.06);padding:4px;border-radius:10px;margin-bottom:14px}
+.tabs button{flex:1;min-height:40px;border-radius:7px;font-family:Rubik,sans-serif;font-weight:600;font-size:14px;color:var(--dark-soft)}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--dark);box-shadow:var(--shadow)}
+.lane-note{font-size:13px;color:var(--dark-soft);margin:0 0 12px}
+.levelgrid{display:grid;gap:12px}
+.levelcard{
+  background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:14px;display:flex;align-items:center;gap:14px;text-align:left;width:100%;
+  transition:transform .14s ease,box-shadow .14s ease;
+}
+.levelcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.levelcard.locked{opacity:.55;pointer-events:none;box-shadow:none;background:rgba(255,255,255,.6)}
+.levelcard .glyph{
+  width:58px;height:58px;flex:none;border-radius:14px;display:grid;place-items:center;
+  background:rgba(212,165,116,.18);font-family:'Noto Sans Thai',sans-serif;font-size:28px;font-weight:600;
+}
+.levelcard .body{flex:1;min-width:0}
+.levelcard .body .k{font-family:Rubik,sans-serif;font-weight:600;font-size:15px}
+.levelcard .body .s{font-size:12.5px;color:var(--dark-soft);margin-top:2px}
+.mini{width:40px;height:40px;flex:none;position:relative}
+.mini svg{transform:rotate(-90deg);width:100%;height:100%}
+.mini .t{fill:none;stroke:rgba(44,62,80,.10);stroke-width:4}
+.mini .b{fill:none;stroke:var(--gold);stroke-width:4;stroke-linecap:round}
+.mini .b.done{stroke:var(--green)}
+.mini span{position:absolute;inset:0;display:grid;place-content:center;font-size:11px;font-weight:600;color:var(--dark-soft)}
+.badge{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:5px;background:rgba(107,184,107,.16);color:#3f7d3f}
+.badge.learn{background:rgba(212,165,116,.22);color:#8a6234}
+
+/* ---------- lesson ---------- */
+.lessonbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.bar{flex:1;height:10px;border-radius:99px;background:rgba(44,62,80,.09);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--accent));transition:width .35s ease}
+.hearts{font-size:15px;letter-spacing:1px;flex:none}
+.prompt{text-align:center;padding:6px 0 4px}
+.prompt .kicker{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--dark-soft);margin-bottom:14px}
+.bigthai{font-family:'Noto Sans Thai',sans-serif;font-weight:600;color:var(--dark);line-height:1.35}
+.bigthai.xl{font-size:88px;line-height:1.1}
+.bigthai.l{font-size:44px}
+.bigthai.m{font-size:30px}
+.prompt .en{font-size:20px;font-family:Rubik,sans-serif;font-weight:600}
+.prompt .roman{color:var(--dark-soft);margin-top:6px;font-size:14px}
+.options{display:grid;gap:10px;margin-top:20px}
+@media(min-width:600px){.options.two{grid-template-columns:1fr 1fr}}
+.opt{
+  min-height:58px;border-radius:10px;background:var(--card);box-shadow:var(--shadow);
+  padding:12px 16px;text-align:left;display:flex;align-items:center;gap:12px;
+  border:2px solid transparent;transition:transform .12s ease,border-color .12s ease,background .12s ease;
+}
+.opt:hover{transform:translateY(-1px);border-color:rgba(212,165,116,.6)}
+.opt .num{font-size:11px;color:var(--dark-soft);width:14px;flex:none}
+.opt .txt{flex:1}
+.opt .txt .a{font-weight:500}
+.opt .txt .b{font-size:12px;color:var(--dark-soft)}
+.opt.correct{border-color:var(--green);background:rgba(107,184,107,.12)}
+.opt.wrong{border-color:var(--accent);background:rgba(232,93,117,.10);animation:shake .34s}
+.opt.dim{opacity:.5}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* scramble */
+.slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:60px;padding:12px;
+  border-radius:10px;border:2px dashed rgba(44,62,80,.16);margin-top:18px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.tile{
+  min-height:48px;padding:8px 14px;border-radius:9px;background:var(--card);box-shadow:var(--shadow);
+  font-family:'Noto Sans Thai',sans-serif;font-size:22px;font-weight:600;
+  display:inline-flex;align-items:center;transition:transform .12s ease;
+}
+.tile:hover{transform:translateY(-2px)}
+.tile.sm{font-size:17px}
+.slots:empty::after{content:'Tap the pieces below in order';font-family:Inter,sans-serif;font-size:13px;color:var(--dark-soft);display:block;margin:auto;font-weight:400}
+
+/* trace */
+.tracewrap{position:relative;width:min(300px,80vw);aspect-ratio:1;margin:18px auto 0;
+  background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.tracewrap .guide{position:absolute;inset:0;display:grid;place-content:center;
+  font-family:'Noto Sans Thai',sans-serif;font-size:200px;color:rgba(44,62,80,.10);user-select:none;pointer-events:none}
+.tracewrap canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+
+/* text input */
+.answerinput{width:100%;min-height:52px;border:none;border-bottom:2px solid var(--gold);
+  background:transparent;font-family:'Noto Sans Thai',Inter,sans-serif;font-size:20px;text-align:center;
+  padding:8px;margin-top:20px;color:var(--dark)}
+.answerinput:focus{outline:none;border-bottom-color:var(--accent)}
+
+/* ---------- feedback ---------- */
+.feedback{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+  background:var(--card);border-top:3px solid var(--green);box-shadow:0 -6px 20px rgba(44,62,80,.12);
+  animation:slideup .26s cubic-bezier(.2,.9,.3,1);
+}
+.feedback.bad{border-top-color:var(--accent)}
+.feedback .inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.feedback .msg{flex:1;min-width:180px}
+.feedback .msg b{display:block;font-family:Rubik,sans-serif;font-size:16px}
+.feedback .msg span{font-size:13px;color:var(--dark-soft)}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+
+/* ---------- footer nav ---------- */
+.nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);
+  border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);
+}
+.nav button{flex:1;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--dark-soft);font-weight:600}
+.nav button em{font-style:normal;font-size:19px;line-height:1;opacity:.7}
+.nav button[aria-current="page"]{color:var(--accent)}
+.nav button[aria-current="page"] em{opacity:1}
+
+/* ---------- results ---------- */
+.results{text-align:center;padding-top:10px}
+.xpline{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}
+.chip{background:var(--card);box-shadow:var(--shadow);border-radius:99px;padding:8px 16px;font-family:Rubik,sans-serif;font-weight:600;font-size:14px}
+.chip.gain{background:rgba(107,184,107,.15);box-shadow:none;color:#3f7d3f}
+.reviewlist{margin-top:18px;text-align:left;display:grid;gap:8px}
+.reviewrow{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:10px;padding:10px 14px;box-shadow:var(--shadow)}
+.reviewrow .m{font-family:'Noto Sans Thai',sans-serif;font-size:22px;width:56px;flex:none}
+.reviewrow .d{flex:1;font-size:13px}
+.reviewrow .d span{color:var(--dark-soft)}
+.reviewrow .r{font-size:16px}
+
+/* ---------- settings / misc ---------- */
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .lbl{font-weight:500}
+.row .hint{font-size:12px;color:var(--dark-soft)}
+.switch{width:52px;height:30px;border-radius:99px;background:rgba(44,62,80,.18);position:relative;flex:none;transition:background .16s}
+.switch i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .16s}
+.switch[aria-checked="true"]{background:var(--green)}
+.switch[aria-checked="true"] i{left:25px}
+.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
+.heat i{aspect-ratio:1;border-radius:4px;background:rgba(44,62,80,.07)}
+.heat i.on{background:var(--gold)}
+.heat i.today{outline:2px solid var(--accent);outline-offset:1px}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.confetti i{position:absolute;width:9px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
+
+@media(min-width:900px){
+  body{font-size:15px}
+  #app{padding:28px 32px 100px;max-width:900px}
+  h1{font-size:32px}h2{font-size:24px}
+  .hero .greet{font-size:44px}
+  .levelgrid{grid-template-columns:1fr 1fr}
+  .nav{max-width:100%;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+
+<div id="app" role="main"></div>
+<nav class="nav" id="nav" aria-label="Main"></nav>
+<div id="fb"></div>
+
+<script>
+/* ============================================================
+   CONTENT
+   ============================================================ */
+const CONSONANTS = [
+ ["ก","ko kai","chicken","k"],["ข","kho khai","egg","kh"],["ฃ","kho khuat","bottle (archaic)","kh"],
+ ["ค","kho khwai","buffalo","kh"],["ฅ","kho khon","person (archaic)","kh"],["ฆ","kho ra-khang","bell","kh"],
+ ["ง","ngo ngu","snake","ng"],["จ","cho chan","plate","ch"],["ฉ","cho ching","cymbals","ch"],
+ ["ช","cho chang","elephant","ch"],["ซ","so so","chain","s"],["ฌ","cho choe","bush","ch"],
+ ["ญ","yo ying","woman","y"],["ฎ","do cha-da","headdress","d"],["ฏ","to pa-tak","goad","t"],
+ ["ฐ","tho san-than","pedestal","th"],["ฑ","tho montho","Montho","th"],["ฒ","tho phu-thao","elder","th"],
+ ["ณ","no nen","novice monk","n"],["ด","do dek","child","d"],["ต","to tao","turtle","t"],
+ ["ถ","tho thung","sack","th"],["ท","tho thahan","soldier","th"],["ธ","tho thong","flag","th"],
+ ["น","no nu","mouse","n"],["บ","bo baimai","leaf","b"],["ป","po pla","fish","p"],
+ ["ผ","pho phueng","bee","ph"],["ฝ","fo fa","lid","f"],["พ","pho phan","tray","ph"],
+ ["ฟ","fo fan","teeth","f"],["ภ","pho samphao","sailboat","ph"],["ม","mo ma","horse","m"],
+ ["ย","yo yak","giant","y"],["ร","ro ruea","boat","r"],["ล","lo ling","monkey","l"],
+ ["ว","wo waen","ring","w"],["ศ","so sala","pavilion","s"],["ษ","so ruesi","hermit","s"],
+ ["ส","so suea","tiger","s"],["ห","ho hip","chest","h"],["ฬ","lo chula","kite","l"],
+ ["อ","o ang","basin","-"],["ฮ","ho nok-huk","owl","h"]
+];
+
+const WORDS = [
+ // greetings & basics
+ ["สวัสดี","sawatdee","hello"],["ขอบคุณ","khop khun","thank you"],["ครับ","khrap","polite (male)"],
+ ["ค่ะ","kha","polite (female)"],["ใช่","chai","yes"],["ไม่","mai","no / not"],
+ ["ขอโทษ","kho thot","sorry / excuse me"],["สบายดี","sabai dee","fine, well"],["ลาก่อน","la kon","goodbye"],
+ ["ยินดี","yin dee","glad, pleased"],
+ // people
+ ["ผม","phom","I (male)"],["ฉัน","chan","I (female)"],["คุณ","khun","you"],["เพื่อน","phuean","friend"],
+ ["แม่","mae","mother"],["พ่อ","pho","father"],["ลูก","luk","child"],["คน","khon","person"],
+ // numbers
+ ["หนึ่ง","nueng","one"],["สอง","song","two"],["สาม","sam","three"],["สี่","si","four"],
+ ["ห้า","ha","five"],["หก","hok","six"],["เจ็ด","chet","seven"],["แปด","paet","eight"],
+ ["เก้า","kao","nine"],["สิบ","sip","ten"],
+ // food & daily
+ ["น้ำ","nam","water"],["ข้าว","khao","rice"],["อาหาร","ahan","food"],["ร้อน","ron","hot"],
+ ["เย็น","yen","cool / evening"],["อร่อย","aroi","delicious"],["เผ็ด","phet","spicy"],["กิน","kin","to eat"],
+ ["ดื่ม","duem","to drink"],["ตลาด","talat","market"],
+ // getting around
+ ["บ้าน","ban","house / home"],["รถ","rot","car / vehicle"],["ไป","pai","to go"],["มา","ma","to come"],
+ ["ที่ไหน","thi nai","where"],["ห้องน้ำ","hong nam","bathroom"],["เท่าไหร่","thao rai","how much"],
+ ["แพง","phaeng","expensive"],["ถูก","thuk","cheap / correct"],["ดี","dee","good"]
+];
+
+const PHRASES = [
+ ["สวัสดีครับ","sawatdee khrap","Hello. (said by a man)"],
+ ["คุณสบายดีไหม","khun sabai dee mai","How are you?"],
+ ["ผมสบายดี ขอบคุณ","phom sabai dee khop khun","I'm fine, thank you."],
+ ["คุณชื่ออะไร","khun chue arai","What is your name?"],
+ ["ผมชื่อจอห์น","phom chue John","My name is John."],
+ ["ยินดีที่ได้รู้จัก","yin dee thi dai ru chak","Nice to meet you."],
+ ["ขอโทษครับ","kho thot khrap","Excuse me. / Sorry."],
+ ["ไม่เป็นไร","mai pen rai","It's alright. / No worries."],
+ ["ผมไม่เข้าใจ","phom mai khao chai","I don't understand."],
+ ["พูดช้าๆ ได้ไหม","phut cha cha dai mai","Could you speak slowly?"],
+ ["นี่เท่าไหร่","ni thao rai","How much is this?"],
+ ["แพงเกินไป","phaeng koen pai","That's too expensive."],
+ ["ลดได้ไหม","lot dai mai","Can you lower the price?"],
+ ["ห้องน้ำอยู่ที่ไหน","hong nam yu thi nai","Where is the bathroom?"],
+ ["ผมหิวข้าว","phom hio khao","I'm hungry."],
+ ["อร่อยมาก","aroi mak","Very delicious."],
+ ["ไม่เผ็ดนะครับ","mai phet na khrap","Not spicy, please."],
+ ["ขอน้ำหนึ่งขวด","kho nam nueng khuat","One bottle of water, please."],
+ ["ผมไปตลาด","phom pai talat","I'm going to the market."],
+ ["เจอกันพรุ่งนี้","choe kan phrung ni","See you tomorrow."]
+];
+
+/* build levels */
+function chunk(a,n){const o=[];for(let i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o}
+const LEVELS=[];
+chunk(CONSONANTS,15).forEach((g,i)=>LEVELS.push({
+  id:'char_'+(i+1),lane:'characters',n:i+1,
+  title:'Consonants '+(i+1),
+  subtitle:g[0][0]+' – '+g[g.length-1][0],
+  items:g.map((c,j)=>({id:'c'+i+'_'+j,thai:c[0],roman:c[1],meaning:c[2],sound:c[3]}))
+}));
+chunk(WORDS,16).forEach((g,i)=>LEVELS.push({
+  id:'word_'+(i+1),lane:'words',n:i+1,
+  title:['Greetings & people','Numbers & food','Out and about'][i]||('Words '+(i+1)),
+  subtitle:g.length+' everyday words',
+  items:g.map((c,j)=>({id:'w'+i+'_'+j,thai:c[0],roman:c[1],meaning:c[2]}))
+}));
+chunk(PHRASES,10).forEach((g,i)=>LEVELS.push({
+  id:'phrase_'+(i+1),lane:'phrases',n:i+1,
+  title:['Meeting people','Out in the world'][i]||('Phrases '+(i+1)),
+  subtitle:g.length+' short sentences',
+  items:g.map((c,j)=>({id:'p'+i+'_'+j,thai:c[0],roman:c[1],meaning:c[2]}))
+}));
+const LANES=[
+  {key:'characters',label:'Characters',note:'The 44 Thai consonants. Learn the letter, its name, and the object it is named after.'},
+  {key:'words',label:'Words',note:'High-frequency words you will hear every day in Thailand.'},
+  {key:'phrases',label:'Phrases',note:'Short sentences you can actually say out loud.'}
+];
+const byId=id=>LEVELS.find(l=>l.id===id);
+const laneLevels=k=>LEVELS.filter(l=>l.lane===k);
+
+/* ============================================================
+   STATE + PERSISTENCE
+   ============================================================ */
+const KEY='thai_tutor_v1';
+const fallback={};
+const store={
+  async get(k){
+    try{const r=await window.storage.get(k);return r?JSON.parse(r.value):null}
+    catch(e){return fallback[k]?JSON.parse(fallback[k]):null}
+  },
+  async set(k,v){
+    const s=JSON.stringify(v);fallback[k]=s;
+    try{await window.storage.set(k,s)}catch(e){}
+  }
+};
+const blank=()=>({
+  name:'',xp:0,streak:0,best:0,lastActive:null,days:[],
+  sound:true,motion:true,
+  items:{},   // itemId -> {c:correctStreak, seen:n}
+  levels:{},  // levelId -> {mastery:0-1, attempts, best}
+  history:[]
+});
+let S=blank(), saveTimer=null;
+function save(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>store.set(KEY,S),200)}
+const today=()=>new Date().toISOString().slice(0,10);
+function touchDay(){
+  const t=today();
+  if(S.lastActive===t)return;
+  const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  S.streak = S.lastActive===y ? S.streak+1 : 1;
+  S.best=Math.max(S.best,S.streak);
+  S.lastActive=t;
+  if(!S.days.includes(t))S.days.push(t);
+  S.days=S.days.slice(-60);
+  save();
+}
+
+/* mastery helpers */
+const MASTERY_STEPS=4;
+function itemMastery(id){const it=S.items[id];return it?Math.min(1,it.c/MASTERY_STEPS):0}
+function levelMastery(lv){
+  return lv.items.reduce((s,i)=>s+itemMastery(i.id),0)/lv.items.length;
+}
+function unlocked(lv){
+  const idx=LEVELS.indexOf(lv);
+  if(idx===0)return true;
+  return levelMastery(LEVELS[idx-1])>=.5;
+}
+function overallMastery(){
+  const all=LEVELS.flatMap(l=>l.items);
+  return all.reduce((s,i)=>s+itemMastery(i.id),0)/all.length;
+}
+function nextLevel(){
+  for(const l of LEVELS){if(unlocked(l)&&levelMastery(l)<1)return l}
+  return LEVELS[LEVELS.length-1];
+}
+function itemsLearned(){return Object.values(S.items).filter(i=>i.c>=MASTERY_STEPS).length}
+
+/* ============================================================
+   AUDIO
+   ============================================================ */
+let thaiVoice=null;
+function loadVoices(){
+  if(!('speechSynthesis' in window))return;
+  const v=speechSynthesis.getVoices();
+  thaiVoice=v.find(x=>/^th/i.test(x.lang))||null;
+}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+function speak(text){
+  if(!S.sound||!('speechSynthesis' in window))return false;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='th-TH';u.rate=.8;
+    if(thaiVoice)u.voice=thaiVoice;
+    speechSynthesis.speak(u);return true;
+  }catch(e){return false}
+}
+const canListen=()=>!!thaiVoice;
+
+/* tiny chime via WebAudio */
+let AC=null;
+function tone(ok){
+  if(!S.sound)return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.connect(g);g.connect(AC.destination);
+    o.type='sine';
+    o.frequency.setValueAtTime(ok?660:210,AC.currentTime);
+    if(ok)o.frequency.setValueAtTime(880,AC.currentTime+.09);
+    g.gain.setValueAtTime(.08,AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.28);
+    o.start();o.stop(AC.currentTime+.3);
+  }catch(e){}
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const $=s=>document.querySelector(s);
+const app=$('#app'), navEl=$('#nav'), fbEl=$('#fb');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+const pick=a=>a[Math.random()*a.length|0];
+function sample(a,n,not){const p=shuffle(a.filter(x=>x!==not));return p.slice(0,n)}
+
+function ring(pct,label,sub,cls){
+  const r=54,c=2*Math.PI*r,off=c*(1-pct);
+  return `<div class="ring-wrap ${cls||''}" id="mainring">
+    <svg viewBox="0 0 130 130" aria-hidden="true">
+      <defs><linearGradient id="ringgrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="var(--gold)"/><stop offset="100%" stop-color="var(--accent)"/>
+      </linearGradient></defs>
+      <circle class="ring-track" cx="65" cy="65" r="${r}"/>
+      <circle class="ring-bar" cx="65" cy="65" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${off}"/>
+    </svg>
+    <div class="ring-face"><b>${label}</b><span>${sub}</span></div>
+  </div>`;
+}
+function miniRing(pct){
+  const r=17,c=2*Math.PI*r,off=c*(1-pct);
+  return `<div class="mini" aria-hidden="true"><svg viewBox="0 0 40 40">
+    <circle class="t" cx="20" cy="20" r="${r}"/>
+    <circle class="b ${pct>=1?'done':''}" cx="20" cy="20" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${off}"/>
+  </svg><span>${Math.round(pct*100)}</span></div>`;
+}
+function confetti(){
+  if(!S.motion)return;
+  const w=document.createElement('div');w.className='confetti';
+  const cols=['#D4A574','#E85D75','#6BB86B','#F4A460'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('i');
+    p.style.left=Math.random()*100+'vw';p.style.top='-20px';
+    p.style.background=pick(cols);
+    p.style.animationDuration=(1.6+Math.random()*1.4)+'s';
+    p.style.animationDelay=(Math.random()*.5)+'s';
+    w.appendChild(p);
+  }
+  document.body.appendChild(w);setTimeout(()=>w.remove(),3400);
+}
+function clearFeedback(){fbEl.innerHTML=''}
+
+/* ============================================================
+   ROUTER
+   ============================================================ */
+let route={name:'home'};
+function go(name,data){clearFeedback();route={name,...data};render();window.scrollTo(0,0)}
+
+function renderNav(){
+  const tabs=[['home','◈','Home'],['hub','◎','Learn'],['stats','▤','Progress'],['settings','⚙','Settings']];
+  navEl.innerHTML=tabs.map(([k,i,l])=>
+    `<button data-nav="${k}" ${route.name===k?'aria-current="page"':''}><em>${i}</em>${l}</button>`).join('');
+  navEl.style.display = route.name==='lesson' ? 'none' : 'flex';
+}
+navEl.addEventListener('click',e=>{
+  const b=e.target.closest('[data-nav]');if(b)go(b.dataset.nav);
+});
+
+function render(){
+  renderNav();
+  ({home:Home,hub:Hub,stats:Stats,settings:Settings,lesson:Lesson,results:Results}[route.name])();
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+function Home(){
+  const pct=overallMastery();
+  const nl=nextLevel();
+  const started=S.xp>0;
+  const hour=new Date().getHours();
+  const greet=hour<12?'อรุณสวัสดิ์':hour<18?'สวัสดีตอนบ่าย':'สวัสดีตอนเย็น';
+  const greetEn=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+  app.innerHTML=`<div class="screen">
+    <div class="hero">
+      <div class="greet thai">${greet}</div>
+      <div class="sub">${greetEn}${S.name?', '+esc(S.name):''}. ${started?'Pick up where you left off.':'Learn Thai characters, words, and sentences at your own pace.'}</div>
+    </div>
+    ${ring(pct,Math.round(pct*100)+'%',started?'mastered':'to begin')}
+    <button class="btn accent block" data-act="continue">${started?'Continue — '+esc(nl.title):'Start learning'}</button>
+    <div class="statgrid">
+      <div class="stat"><b>${S.xp}</b><span>XP</span></div>
+      <div class="stat"><b>${S.streak}</b><span>Day streak</span></div>
+      <div class="stat"><b>${itemsLearned()}</b><span>Mastered</span></div>
+    </div>
+    ${started?`<div class="card" style="margin-top:12px">
+      <h3>Quick sprint</h3>
+      <p class="lane-note" style="margin:6px 0 12px">Ten mixed questions drawn from everything you have seen so far. Three hearts, no retries.</p>
+      <button class="btn ghost block" data-act="sprint">Start sprint</button>
+    </div>`:`<div class="card" style="margin-top:12px">
+      <h3>How this works</h3>
+      <p class="lane-note" style="margin:6px 0 0">You start with the consonants, then move to words, then to whole phrases. Each level opens once you are halfway through the one before it. Everything saves as you go.</p>
+    </div>`}
+  </div>`;
+  app.querySelector('[data-act="continue"]').onclick=()=>startLesson(nextLevel());
+  const sp=app.querySelector('[data-act="sprint"]');if(sp)sp.onclick=startSprint;
+}
+
+/* ============================================================
+   HUB
+   ============================================================ */
+let activeLane='characters';
+function Hub(){
+  const lane=LANES.find(l=>l.key===activeLane);
+  app.innerHTML=`<div class="screen">
+    <div class="topbar"><div class="title"><div class="k">Levels</div><div class="s">${LEVELS.length} in total</div></div></div>
+    <div class="tabs" role="tablist">${LANES.map(l=>
+      `<button role="tab" data-lane="${l.key}" aria-selected="${l.key===activeLane}">${l.label}</button>`).join('')}</div>
+    <p class="lane-note">${lane.note}</p>
+    <div class="levelgrid">${laneLevels(activeLane).map(lv=>{
+      const m=levelMastery(lv),open=unlocked(lv);
+      return `<button class="levelcard ${open?'':'locked'}" data-level="${lv.id}" ${open?'':'aria-disabled="true"'}>
+        <div class="glyph thai">${open?esc(lv.items[0].thai):'🔒'}</div>
+        <div class="body">
+          <div class="k">${esc(lv.title)}</div>
+          <div class="s">${esc(lv.subtitle)}</div>
+          <div style="margin-top:6px">${m>=1?'<span class="badge">Mastered</span>':m>0?'<span class="badge learn">In progress</span>':open?'<span class="badge learn">Ready</span>':'<span class="badge learn">Locked</span>'}</div>
+        </div>
+        ${miniRing(m)}
+      </button>`}).join('')}</div>
+  </div>`;
+  app.querySelectorAll('[data-lane]').forEach(b=>b.onclick=()=>{activeLane=b.dataset.lane;Hub()});
+  app.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>startLesson(byId(b.dataset.level)));
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+function Stats(){
+  const days=[];for(let i=27;i>=0;i--)days.push(new Date(Date.now()-i*864e5).toISOString().slice(0,10));
+  const recent=S.history.slice(-8).reverse();
+  app.innerHTML=`<div class="screen">
+    <div class="topbar"><div class="title"><div class="k">Progress</div><div class="s">Everything you have done so far</div></div></div>
+    <div class="statgrid" style="margin-top:0">
+      <div class="stat"><b>${S.xp}</b><span>Total XP</span></div>
+      <div class="stat"><b>${S.best}</b><span>Best streak</span></div>
+      <div class="stat"><b>${S.days.length}</b><span>Days active</span></div>
+    </div>
+    <div class="card" style="margin-top:12px"><h3>Last four weeks</h3>
+      <div class="heat">${days.map(d=>`<i class="${S.days.includes(d)?'on':''} ${d===today()?'today':''}" title="${d}"></i>`).join('')}</div>
+    </div>
+    <div class="card"><h3>Mastery by lane</h3>
+      ${LANES.map(l=>{
+        const lv=laneLevels(l.key);
+        const m=lv.reduce((s,x)=>s+levelMastery(x),0)/lv.length;
+        return `<div class="row"><div><div class="lbl">${l.label}</div>
+          <div class="hint">${lv.filter(x=>levelMastery(x)>=1).length} of ${lv.length} levels mastered</div></div>
+          <div style="width:120px"><div class="bar"><i style="width:${Math.round(m*100)}%"></i></div></div></div>`}).join('')}
+    </div>
+    <div class="card"><h3>Recent lessons</h3>
+      ${recent.length?recent.map(h=>`<div class="row"><div><div class="lbl">${esc(h.title)}</div>
+        <div class="hint">${new Date(h.at).toLocaleDateString()} · ${h.correct}/${h.total} correct</div></div>
+        <div class="chip">+${h.xp} XP</div></div>`).join('')
+        :'<p class="hint" style="margin:8px 0 0">No lessons yet. Your finished lessons will show up here.</p>'}
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   SETTINGS
+   ============================================================ */
+function Settings(){
+  app.innerHTML=`<div class="screen">
+    <div class="topbar"><div class="title"><div class="k">Settings</div><div class="s">Saved on this device</div></div></div>
+    <div class="card">
+      <div class="row"><div><div class="lbl">Your name</div><div class="hint">Used in the greeting on the home screen</div></div></div>
+      <input class="answerinput" id="nm" style="margin-top:0;font-size:17px" value="${esc(S.name)}" placeholder="Add your name" maxlength="24">
+    </div>
+    <div class="card">
+      <div class="row"><div><div class="lbl">Sound</div><div class="hint">Thai pronunciation and answer chimes${canListen()?'':' — no Thai voice found on this device, so listening exercises are hidden'}</div></div>
+        <button class="switch" role="switch" id="sw-sound" aria-checked="${S.sound}" aria-label="Sound"><i></i></button></div>
+      <div class="row"><div><div class="lbl">Animation</div><div class="hint">Celebrations and motion effects</div></div>
+        <button class="switch" role="switch" id="sw-motion" aria-checked="${S.motion}" aria-label="Animation"><i></i></button></div>
+    </div>
+    <div class="card">
+      <h3>Reset progress</h3>
+      <p class="hint" style="margin:6px 0 12px">Clears XP, streak, and every level's mastery. This cannot be undone.</p>
+      <button class="btn quiet" id="reset">Reset everything</button>
+    </div>
+    <p class="hint" style="text-align:center;margin-top:18px">Thai audio uses your device's built-in voices. Pronunciation is a guide, not a substitute for a teacher.</p>
+  </div>`;
+  $('#nm').onchange=e=>{S.name=e.target.value.trim();save()};
+  $('#sw-sound').onclick=e=>{S.sound=!S.sound;save();Settings()};
+  $('#sw-motion').onclick=e=>{S.motion=!S.motion;save();Settings()};
+  $('#reset').onclick=()=>{
+    if(confirm('Reset all progress? This cannot be undone.')){
+      const n=S.name;S=blank();S.name=n;save();go('home');
+    }
+  };
+}
+
+/* ============================================================
+   LESSON ENGINE
+   ============================================================ */
+let L=null; // active lesson
+
+function buildQuestions(items,pool,lane,count){
+  const qs=[];
+  const weighted=shuffle(items).sort((a,b)=>itemMastery(a.id)-itemMastery(b.id));
+  const chosen=[];
+  while(chosen.length<count){chosen.push(...weighted)}
+  chosen.length=count;
+  chosen.forEach((it,i)=>{
+    const types=[];
+    if(lane==='characters'){
+      types.push('meaning','reverse','sound');
+      if(canListen())types.push('listen');
+      if(i%4===3)types.push('trace');
+    }else if(lane==='words'){
+      types.push('meaning','reverse','scramble');
+      if(canListen())types.push('listen');
+    }else{
+      types.push('meaning','reverse','order');
+      if(canListen())types.push('listen');
+    }
+    qs.push({item:it,type:pick(types),pool,lane});
+  });
+  return shuffle(qs);
+}
+
+function startLesson(lv){
+  if(!unlocked(lv))return;
+  touchDay();
+  L={level:lv,title:lv.title,qs:buildQuestions(lv.items,lv.items,lv.lane,10),
+     i:0,correct:0,xp:0,hearts:null,miss:[],streakRun:0};
+  go('lesson');
+}
+function startSprint(){
+  touchDay();
+  const seen=LEVELS.flatMap(l=>l.items).filter(i=>S.items[i.id]);
+  if(seen.length<4){go('hub');return}
+  const lanesOf=id=>id[0]==='c'?'characters':id[0]==='w'?'words':'phrases';
+  const qs=buildQuestions(seen,seen,'words',10).map(q=>{
+    const lane=lanesOf(q.item.id);
+    const t=lane==='characters'?pick(['meaning','reverse','sound']):pick(['meaning','reverse']);
+    return {...q,lane,type:t,pool:seen};
+  });
+  L={level:null,title:'Quick sprint',qs,i:0,correct:0,xp:0,hearts:3,miss:[],streakRun:0};
+  go('lesson');
+}
+
+function Lesson(){
+  const q=L.qs[L.i];
+  const pctDone=L.i/L.qs.length;
+  app.innerHTML=`<div class="screen">
+    <div class="topbar">
+      <button class="iconbtn" id="quit" aria-label="Leave lesson">←</button>
+      <div class="title"><div class="k">${esc(L.title)}</div><div class="s">Question ${L.i+1} of ${L.qs.length}</div></div>
+    </div>
+    <div class="lessonbar">
+      <div class="bar"><i style="width:${pctDone*100}%"></i></div>
+      ${L.hearts!==null?`<div class="hearts" aria-label="${L.hearts} hearts left">${'♥'.repeat(L.hearts)}${'<span style="opacity:.25">♡</span>'.repeat(3-L.hearts)}</div>`:''}
+    </div>
+    <div id="stage"></div>
+  </div>`;
+  $('#quit').onclick=()=>{ if(L.i===0||confirm('Leave this lesson? Progress on finished questions is kept.')) go(L.level?'hub':'home') };
+  ({meaning:qMeaning,reverse:qReverse,sound:qSound,listen:qListen,scramble:qScramble,order:qOrder,trace:qTrace}[q.type])(q,$('#stage'));
+}
+
+/* --- question renderers --- */
+function optionList(opts,render,onPick){
+  return `<div class="options ${opts.length>3?'two':''}">${opts.map((o,i)=>
+    `<button class="opt" data-i="${i}"><span class="num">${i+1}</span><span class="txt">${render(o)}</span></button>`).join('')}</div>`;
+}
+function wireOpts(stage,opts,correctIdx,onDone){
+  const btns=[...stage.querySelectorAll('.opt')];
+  btns.forEach((b,i)=>b.onclick=()=>{
+    btns.forEach(x=>x.style.pointerEvents='none');
+    const ok=i===correctIdx;
+    b.classList.add(ok?'correct':'wrong');
+    if(!ok)btns[correctIdx].classList.add('correct');
+    btns.forEach((x,j)=>{if(j!==i&&j!==correctIdx)x.classList.add('dim')});
+    setTimeout(()=>onDone(ok),ok?260:520);
+  });
+  const key=e=>{const n=parseInt(e.key,10);if(n>=1&&n<=btns.length){btns[n-1].click();document.removeEventListener('keydown',key)}};
+  document.addEventListener('keydown',key);
+  stage._key=key;
+}
+function sizeFor(lane){return lane==='characters'?'xl':lane==='words'?'l':'m'}
+
+function qMeaning(q,stage){ // Thai -> English
+  const it=q.item;
+  const wrong=sample(q.pool,3,it);
+  const opts=shuffle([it,...wrong]);
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">What does this mean?</div>
+    <div class="bigthai ${sizeFor(q.lane)}">${esc(it.thai)}</div>
+    ${q.lane!=='characters'?`<div class="roman">${esc(it.roman)}</div>`:''}
+    ${canListen()?'<button class="btn quiet" style="margin-top:14px" id="say">◂)) Hear it</button>':''}
+  </div>${optionList(opts,o=>`<span class="a">${esc(o.meaning)}</span>${q.lane==='characters'?`<span class="b">${esc(o.roman)}</span>`:''}`)}`;
+  const s=$('#say');if(s)s.onclick=()=>speak(it.thai);
+  wireOpts(stage,opts,opts.indexOf(it),ok=>answered(q,ok));
+}
+function qReverse(q,stage){ // English -> Thai
+  const it=q.item;
+  const opts=shuffle([it,...sample(q.pool,3,it)]);
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">Which one is this?</div>
+    <div class="en">${esc(it.meaning)}</div>
+    <div class="roman">${esc(it.roman)}</div>
+  </div>${optionList(opts,o=>`<span class="a thai" style="font-size:${q.lane==='characters'?'30px':'20px'}">${esc(o.thai)}</span>`)}`;
+  wireOpts(stage,opts,opts.indexOf(it),ok=>answered(q,ok));
+}
+function qSound(q,stage){ // character -> its name
+  const it=q.item;
+  const opts=shuffle([it,...sample(q.pool,3,it)]);
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">What is this letter called?</div>
+    <div class="bigthai xl">${esc(it.thai)}</div>
+  </div>${optionList(opts,o=>`<span class="a">${esc(o.roman)}</span><span class="b">initial sound “${esc(o.sound||'')}”</span>`)}`;
+  wireOpts(stage,opts,opts.indexOf(it),ok=>answered(q,ok));
+}
+function qListen(q,stage){
+  const it=q.item;
+  const opts=shuffle([it,...sample(q.pool,3,it)]);
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">Listen and choose</div>
+    <button class="btn accent" id="say" style="margin:10px auto;min-width:180px">◂)) Play again</button>
+    <div class="roman">Tap to replay as often as you like</div>
+  </div>${optionList(opts,o=>`<span class="a thai" style="font-size:${q.lane==='characters'?'30px':'20px'}">${esc(o.thai)}</span><span class="b">${esc(o.meaning)}</span>`)}`;
+  $('#say').onclick=()=>speak(it.thai);
+  setTimeout(()=>speak(it.thai),400);
+  wireOpts(stage,opts,opts.indexOf(it),ok=>answered(q,ok));
+}
+function qScramble(q,stage){ // rebuild Thai word from its characters
+  const it=q.item;
+  const chars=[...it.thai];
+  if(chars.length<2||chars.length>7)return qMeaning(q,stage);
+  const pool=shuffle(chars.map((c,i)=>({c,i})));
+  let placed=[];
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">Build the word</div>
+    <div class="en">${esc(it.meaning)}</div>
+    <div class="roman">${esc(it.roman)}</div>
+  </div>
+  <div class="slots" id="slots"></div>
+  <div class="pool" id="pool"></div>
+  <div style="margin-top:20px"><button class="btn block" id="check" disabled>Check</button></div>`;
+  const slots=$('#slots'),poolEl=$('#pool'),check=$('#check');
+  function draw(){
+    slots.innerHTML=placed.map((p,i)=>`<button class="tile" data-back="${i}">${esc(p.c)}</button>`).join('');
+    poolEl.innerHTML=pool.map((p,i)=>placed.includes(p)?'':`<button class="tile" data-add="${i}">${esc(p.c)}</button>`).join('');
+    slots.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{placed.splice(+b.dataset.back,1);draw()});
+    poolEl.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{placed.push(pool[+b.dataset.add]);draw()});
+    check.disabled=placed.length!==chars.length;
+  }
+  draw();
+  check.onclick=()=>{
+    const ok=placed.map(p=>p.c).join('')===it.thai;
+    slots.style.borderColor=ok?'var(--green)':'var(--accent)';
+    setTimeout(()=>answered(q,ok),300);
+  };
+}
+function qOrder(q,stage){ // rebuild phrase from word chunks
+  const it=q.item;
+  const parts=it.roman.split(/\s+/);
+  const thaiParts=splitPhrase(it.thai,parts.length);
+  if(thaiParts.length<2)return qMeaning(q,stage);
+  const pool=shuffle(thaiParts.map((c,i)=>({c,i})));
+  let placed=[];
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">Put the phrase in order</div>
+    <div class="en">${esc(it.meaning)}</div>
+  </div>
+  <div class="slots" id="slots"></div>
+  <div class="pool" id="pool"></div>
+  <div style="margin-top:20px"><button class="btn block" id="check" disabled>Check</button></div>`;
+  const slots=$('#slots'),poolEl=$('#pool'),check=$('#check');
+  function draw(){
+    slots.innerHTML=placed.map((p,i)=>`<button class="tile sm" data-back="${i}">${esc(p.c)}</button>`).join('');
+    poolEl.innerHTML=pool.map((p,i)=>placed.includes(p)?'':`<button class="tile sm" data-add="${i}">${esc(p.c)}</button>`).join('');
+    slots.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{placed.splice(+b.dataset.back,1);draw()});
+    poolEl.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{placed.push(pool[+b.dataset.add]);draw()});
+    check.disabled=placed.length!==thaiParts.length;
+  }
+  draw();
+  check.onclick=()=>{
+    const ok=placed.map(p=>p.c).join('')===thaiParts.join('');
+    slots.style.borderColor=ok?'var(--green)':'var(--accent)';
+    setTimeout(()=>answered(q,ok),300);
+  };
+}
+/* Thai is written without spaces; split evenly into n readable chunks */
+function splitPhrase(thai,n){
+  const ch=[...thai].filter(c=>c!==' ');
+  n=Math.max(2,Math.min(n,5));
+  const size=Math.ceil(ch.length/n),out=[];
+  for(let i=0;i<ch.length;i+=size)out.push(ch.slice(i,i+size).join(''));
+  return out;
+}
+function qTrace(q,stage){
+  const it=q.item;
+  stage.innerHTML=`<div class="prompt">
+    <div class="kicker">Trace the letter</div>
+    <div class="en">${esc(it.roman)}</div>
+    <div class="roman">${esc(it.meaning)} — follow the grey shape with your finger or mouse</div>
+  </div>
+  <div class="tracewrap"><div class="guide thai">${esc(it.thai)}</div><canvas id="cv"></canvas></div>
+  <div style="display:flex;gap:10px;margin-top:18px">
+    <button class="btn quiet" id="clr" style="flex:none">Clear</button>
+    <button class="btn" id="done" style="flex:1">Check my tracing</button>
+  </div>`;
+  const cv=$('#cv'),r=cv.getBoundingClientRect();
+  const dpr=window.devicePixelRatio||1;
+  cv.width=r.width*dpr;cv.height=r.height*dpr;
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+  ctx.lineWidth=14;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(232,93,117,.75)';
+  let drawing=false,pts=0;
+  const pos=e=>{const b=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return[t.clientX-b.left,t.clientY-b.top]};
+  const start=e=>{e.preventDefault();drawing=true;ctx.beginPath();ctx.moveTo(...pos(e))};
+  const move=e=>{if(!drawing)return;e.preventDefault();ctx.lineTo(...pos(e));ctx.stroke();pts++};
+  const end=()=>drawing=false;
+  cv.addEventListener('pointerdown',start);cv.addEventListener('pointermove',move);
+  window.addEventListener('pointerup',end,{once:false});
+  $('#clr').onclick=()=>{ctx.clearRect(0,0,cv.width,cv.height);pts=0};
+  $('#done').onclick=()=>{
+    // lenient check: did they actually draw a reasonable amount inside the frame?
+    const ok=pts>18;
+    answered(q,ok,ok?'Nice work — keep the shape in mind.':'Try tracing the whole shape in one flow.');
+  };
+}
+
+/* --- answer handling --- */
+function answered(q,ok,note){
+  if(app.querySelector('#stage')&&app.querySelector('#stage')._key)
+    document.removeEventListener('keydown',app.querySelector('#stage')._key);
+  const it=q.item;
+  const rec=S.items[it.id]||(S.items[it.id]={c:0,seen:0});
+  rec.seen++;
+  rec.c = ok ? Math.min(MASTERY_STEPS,rec.c+1) : Math.max(0,rec.c-1);
+  if(ok){L.correct++;L.xp+=10;L.streakRun++;if(L.streakRun===5)L.xp+=100}
+  else{L.streakRun=0;L.miss.push(it);if(L.hearts!==null)L.hearts--}
+  tone(ok);
+  save();
+  showFeedback(q,ok,note);
+}
+function showFeedback(q,ok,note){
+  const it=q.item;
+  const last=L.i>=L.qs.length-1;
+  const dead=L.hearts===0;
+  fbEl.innerHTML=`<div class="feedback ${ok?'':'bad'}">
+    <div class="inner">
+      <div class="msg">
+        <b>${ok?pick(['Correct','Nicely done','That\'s it','ถูกต้อง — correct']):'Not quite'}</b>
+        <span><span class="thai">${esc(it.thai)}</span> · ${esc(it.roman)} · ${esc(it.meaning)}${note?' — '+esc(note):''}</span>
+      </div>
+      ${canListen()?'<button class="btn quiet" id="fsay" style="flex:none">◂)) Hear</button>':''}
+      <button class="btn ${ok?'':'accent'}" id="next" style="flex:none;min-width:130px">${dead?'See results':last?'Finish':'Next'}</button>
+    </div></div>`;
+  const s=$('#fsay');if(s)s.onclick=()=>speak(it.thai);
+  const nx=$('#next');
+  nx.onclick=advance;nx.focus();
+  const key=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();document.removeEventListener('keydown',key);advance()}};
+  document.addEventListener('keydown',key);
+  fbEl._key=key;
+}
+function advance(){
+  document.removeEventListener('keydown',fbEl._key);
+  clearFeedback();
+  if(L.hearts===0||L.i>=L.qs.length-1){finish()}
+  else{L.i++;Lesson()}
+}
+function finish(){
+  const perfect=L.correct===L.qs.length;
+  if(perfect)L.xp+=50;
+  S.xp+=L.xp;
+  S.history.push({title:L.title,at:Date.now(),correct:L.correct,total:L.qs.length,xp:L.xp});
+  S.history=S.history.slice(-50);
+  save();
+  if(perfect||(L.level&&levelMastery(L.level)>=1))confetti();
+  go('results');
+}
+function Results(){
+  const perfect=L.correct===L.qs.length;
+  const lvDone=L.level&&levelMastery(L.level)>=1;
+  const pct=L.correct/L.qs.length;
+  const nl=nextLevel();
+  app.innerHTML=`<div class="screen results">
+    ${ring(pct,L.correct+'/'+L.qs.length,'correct','lg')}
+    <h1>${perfect?'Perfect run':pct>=.7?'Well done':'Good effort'}</h1>
+    <p class="lane-note" style="margin-top:6px">${
+      lvDone?'You have mastered '+esc(L.level.title)+'. The next level is open.'
+      :perfect?'Every answer right. That is worth a bonus.'
+      :L.miss.length?'Review the ones below, then run it again — repetition is the whole trick.'
+      :'Keep going while it is fresh.'}</p>
+    <div class="xpline">
+      <div class="chip gain">+${L.xp} XP</div>
+      <div class="chip">${S.streak} day streak</div>
+      ${perfect?'<div class="chip gain">Perfect bonus</div>':''}
+    </div>
+    ${L.miss.length?`<h3 style="text-align:left;margin-top:22px">Worth another look</h3>
+      <div class="reviewlist">${[...new Set(L.miss)].map(i=>`<div class="reviewrow">
+        <div class="m">${esc(i.thai)}</div>
+        <div class="d"><b>${esc(i.meaning)}</b><br><span>${esc(i.roman)}</span></div>
+        <div class="r">✕</div></div>`).join('')}</div>`:''}
+    <div style="display:grid;gap:10px;margin-top:24px">
+      <button class="btn accent block" id="again">${L.level?'Practise this level again':'Run another sprint'}</button>
+      <button class="btn ghost block" id="onward">${lvDone?'Start '+esc(nl.title):'Back to levels'}</button>
+    </div>
+  </div>`;
+  $('#again').onclick=()=>L.level?startLesson(L.level):startSprint();
+  $('#onward').onclick=()=>lvDone?startLesson(nl):go('hub');
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+(async function(){
+  const saved=await store.get(KEY);
+  if(saved)S=Object.assign(blank(),saved);
+  render();
+})();
+</script>
