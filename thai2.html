@@ -363,6 +363,9 @@ const WORDS = [
   /* greetings & people */
   ["สวัสดี","sawatdee","hello"],["ขอบคุณ","khopkhun","thank you"],["ใช่","chai","yes"],["ไม่","mai","no / not"],
   ["ผม","phom","I (male)"],["ฉัน","chan","I (female)"],["คุณ","khun","you"],["ครับ","khrap","polite (male)"],
+  /* days of the week */
+  ["วัน","Wan","Day"],["วันจันทร์","Wan-jan","Monday"],["วันอังคาร","Wan-aung-kaan","Tuesday"],["วันพุธ","Wan-Put","Wednesday"],["วันพฤหัสบดี)","Wan-Pa-rue-had-(sa-ba-dee)","Thursday"],
+  ["วันศุกร์","Wan-Suk","Friday"],["วันเสาร์","Wan-Sao","Saturday"],["วันอาทิตย์","Wan-aa-tid","Sunday"],
   /* numbers 1–8 */
   ["หนึ่ง","nueng","one"],["สอง","song","two"],["สาม","sam","three"],["สี่","si","four"],
   ["ห้า","ha","five"],["หก","hok","six"],["เจ็ด","jet","seven"],["แปด","paet","eight"],
@@ -413,7 +416,7 @@ const PHRASES = [
 
 const TRACKS = {
   chars:{name:"Letters",note:"The 44 consonants, grouped the way Thai children learn them — each letter carries a word that fixes its sound.",items:CONSONANTS,per:8,label:i=>"Letters "+(i*8+1)+"–"+Math.min((i+1)*8,CONSONANTS.length)},
-  words:{name:"Words",note:"Everyday vocabulary: numbers, food, people, places. Enough to order lunch and ask the price.",items:WORDS,per:8,label:i=>["Greetings & people","Numbers 1–8","Counting & money","Food","Taste & temperature","Getting around","People & feelings","Describing things"][i]||"Words "+(i+1)},
+  words:{name:"Words",note:"Everyday vocabulary: numbers, food, people, places. Enough to order lunch and ask the price.",items:WORDS,per:8,label:i=>["Greetings & people","Days of the Week","Numbers 1–8","Counting & money","Food","Taste & temperature","Getting around","People & feelings","Describing things"][i]||"Words "+(i+1)},
   phrases:{name:"Phrases",note:"Whole sentences you can say out loud. Tap any Thai text to hear it.",items:PHRASES,per:6,label:i=>["First conversations","At the market","Out and about","Small talk"][i]||"Phrases "+(i+1)}
 };
 const ALL = [...CONSONANTS,...WORDS,...PHRASES];
