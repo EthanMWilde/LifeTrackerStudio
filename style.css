@@ -1058,3 +1058,12 @@ body.dark {
   font-weight: 600;
   white-space: nowrap;
 }
+
+.app-cta-group .platform-row {
+  align-items: center;
+}
+
+.app-cta-group .platform-row .platform-label {
+  font-size: 16px;
+  line-height: 1.2;
+}
