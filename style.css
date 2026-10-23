@@ -941,33 +941,7 @@ body.dark {
 }
 
 
-.screenshot-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 22px;
-}
 
-.screenshot-heading h2 {
-  margin: 0;
-}
-
-#screenshot-platform {
-  font: inherit;
-  font-size: 13.5px;
-  color: var(--ink);
-  background: var(--card-bg);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-#screenshot-platform:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
 
 .screenshot-toolbar {
   display: flex;
@@ -1032,4 +1006,16 @@ body.dark {
   font-size: 13px;
   line-height: 1.4;
   text-align: center;
+}
+
+.app-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.app-cta-group .store-button {
+  margin-top: 0;
 }
