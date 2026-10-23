@@ -1041,3 +1041,11 @@ body.dark {
 .screenshot-row[data-platform="mac"] .screenshot {
   height: 300px;
 }
+
+.screenshot {
+  cursor: zoom-in;
+}
+
+.screenshot-row.is-dragging .screenshot {
+  cursor: grabbing;
+}
