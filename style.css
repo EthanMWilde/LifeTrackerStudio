@@ -1019,3 +1019,25 @@ body.dark {
 .app-cta-group .store-button {
   margin-top: 0;
 }
+
+.screenshot-row {
+  cursor: grab;
+}
+
+.screenshot-row.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.screenshot-row img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.screenshot-row[data-platform="ipad"] .screenshot {
+  height: 360px;
+}
+
+.screenshot-row[data-platform="mac"] .screenshot {
+  height: 300px;
+}
