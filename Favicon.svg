@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="Tick" transform="matrix(1.39271,0,0,1.39271,-1564.71,-538.057)">
+        <g transform="matrix(1.11234,0,0,1.11234,-153.862,-154.259)">
+            <circle cx="1478.86" cy="816.5" r="330.5" style="fill:white;"/>
+        </g>
+        <g transform="matrix(1.05468,0,0,1.05468,-68.583,-107.175)">
+            <circle cx="1478.86" cy="816.5" r="330.5" style="fill:rgb(17,189,25);fill-opacity:0.5;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,12.2753,-62.5322)">
+            <circle cx="1478.86" cy="816.5" r="330.5" style="fill:rgb(17,189,25);"/>
+        </g>
+        <g transform="matrix(0.706604,-0.706604,0.809614,0.809614,-226.158,1106.29)">
+            <path d="M1406,743.061C1406,718.959 1383.58,699.392 1355.96,699.392C1328.35,699.392 1305.93,718.959 1305.93,743.061L1305.93,907.946C1305.93,932.047 1328.35,951.615 1355.96,951.615C1383.58,951.615 1406,932.047 1406,907.946L1406,743.061Z" style="fill:white;"/>
+        </g>
+        <g transform="matrix(0.780349,0.624206,-1.07319,1.34165,1403.11,-1197.5)">
+            <path d="M1406,728.494C1406,712.432 1383.58,699.392 1355.96,699.392C1328.35,699.392 1305.93,712.432 1305.93,728.494L1305.93,922.512C1305.93,938.575 1328.35,951.615 1355.96,951.615C1383.58,951.615 1406,938.575 1406,922.512L1406,728.494Z" style="fill:white;"/>
+        </g>
+    </g>
+</svg>
