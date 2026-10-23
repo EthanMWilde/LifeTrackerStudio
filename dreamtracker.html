@@ -214,6 +214,21 @@ function updateThemeIcon(isDark) {
 
 function toggleMobileNav() { document.querySelector('nav.main-nav').classList.toggle('open'); }
 
+const screenshotPlatform = document.getElementById('screenshot-platform');
+
+screenshotPlatform.addEventListener('change', function () {
+  const platform = this.value;
+  const prefix = platform === 'ios'
+    ? 'DT'
+    : platform === 'ipad'
+      ? 'DTiPad'
+      : 'DTMac';
+
+  document.querySelectorAll('.screenshot[data-screenshot-index]').forEach(image => {
+    image.src = `images/${prefix}${image.dataset.screenshotIndex}.jpeg`;
+  });
+});
+  
 </script>
 
 </body>
