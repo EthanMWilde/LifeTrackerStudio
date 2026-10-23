@@ -87,19 +87,26 @@
   </section>
 
   <section class="section">
-    <div class="wrap">
+  <div class="wrap">
+    <div class="screenshot-toolbar">
       <h2>Screenshots</h2>
-      <div class="screenshot-row">
-        <img src="images/MT1.jpeg" alt="Home Screen" class="screenshot">
-        <img src="images/MT2.jpeg" alt="Set your goal" class="screenshot">
-        <img src="images/MT3.jpeg" alt="Start tracking" class="screenshot">
-        <img src="images/MT4.jpeg" alt="See your weight over time" class="screenshot">
-        <img src="images/MT5.jpeg" alt="Use Pro to see trends" class="screenshot">
-        <img src="images/MT6.jpeg" alt="Export to CSV or PDF" class="screenshot">
-        <img src="images/MT7.jpeg" alt="Widget, Control Centre, and Shortcuts support" class="screenshot">
+      <div class="screenshot-picker" role="group" aria-label="Choose screenshot platform">
+        <button type="button" data-platform="ios" aria-pressed="true">iOS</button>
+        <button type="button" data-platform="watch" aria-pressed="false">Apple Watch</button>
       </div>
     </div>
-  </section>
+
+    <div class="screenshot-row" data-platform="ios" data-ios-prefix="MT" data-ios-extension="jpeg" data-watch-prefix="MTWatch" data-watch-extension="png">
+      <figure class="screenshot-card" data-screenshot-index="1" data-ios-caption="Home Screen" data-watch-caption="Home Screen on Apple Watch"><img src="images/MT1.jpeg" alt="Home Screen" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="2" data-ios-caption="Set your goal" data-watch-caption="Set your goal on Apple Watch"><img src="images/MT2.jpeg" alt="Set your goal" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="3" data-ios-caption="Start tracking" data-watch-caption="Start tracking on Apple Watch"><img src="images/MT3.jpeg" alt="Start tracking" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="4" data-ios-caption="See your weight over time" data-watch-caption="See your weight over time on Apple Watch"><img src="images/MT4.jpeg" alt="See your weight over time" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="5" data-ios-caption="Use Pro to see trends" data-watch-caption="See trends on Apple Watch"><img src="images/MT5.jpeg" alt="Use Pro to see trends" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="6" data-ios-caption="Export to CSV or PDF" data-watch-caption="Export to CSV or PDF on Apple Watch"><img src="images/MT6.jpeg" alt="Export to CSV or PDF" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="7" data-ios-caption="Widget, Control Centre, and Shortcuts support" data-watch-caption="Widget, Control Centre, and Shortcuts support on Apple Watch"><img src="images/MT7.jpeg" alt="Widget, Control Centre, and Shortcuts support" class="screenshot"></figure>
+    </div>
+  </div>
+</section>
 
   <section class="section">
     <div class="wrap">
@@ -285,13 +292,6 @@
     }
   });
 
-  document.querySelectorAll('.screenshot').forEach(function(img) {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', function() {
-      document.getElementById('lightbox-img').src = this.src;
-      document.getElementById('lightbox').style.display = 'flex';
-    });
-  });
 
   function toggleTheme() {
     const isDark = document.body.classList.toggle('dark');
@@ -343,6 +343,6 @@ function toggleMobileNav() {
   document.querySelector('nav.main-nav').classList.toggle('open');
 }
 </script>
-
+<script src="screenshot-picker.js"></script>
 </body>
 </html>
