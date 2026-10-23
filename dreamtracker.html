@@ -69,26 +69,60 @@
 </div>
   </section>
 
-   <section class="section">
+  <section class="section">
   <div class="wrap">
-    <div class="screenshot-heading">
+    <div class="screenshot-toolbar">
       <h2>Screenshots</h2>
-      <select id="screenshot-platform" aria-label="Screenshot platform">
-        <option value="ios">iOS</option>
-        <option value="ipad">iPad</option>
-        <option value="mac">Mac</option>
-      </select>
+      <div class="screenshot-picker" role="group" aria-label="Choose screenshot platform">
+        <button type="button" data-platform="ios" aria-pressed="true">iOS</button>
+        <button type="button" data-platform="ipad" aria-pressed="false">iPad</button>
+        <button type="button" data-platform="mac" aria-pressed="false">Mac</button>
+      </div>
     </div>
 
     <div class="screenshot-row">
-      <img src="images/DT1.jpeg" data-screenshot-index="1" alt="Home Screen" class="screenshot">
-      <img src="images/DT2.jpeg" data-screenshot-index="2" alt="Log with ease" class="screenshot">
-      <img src="images/DT3.jpeg" data-screenshot-index="3" alt="Organise with tags" class="screenshot">
-      <img src="images/DT4.jpeg" data-screenshot-index="4" alt="Organise with folders" class="screenshot">
-      <img src="images/DT5.jpeg" data-screenshot-index="5" alt="Keep all devices in sync" class="screenshot">
-      <img src="images/DT6.jpeg" data-screenshot-index="6" alt="View dreams over time" class="screenshot">
-      <img src="images/DT7.jpeg" data-screenshot-index="7" alt="Create reports and export" class="screenshot">
-      <img src="images/DT8.jpeg" data-screenshot-index="8" alt="Widget, Control Centre, and Shortcuts support" class="screenshot">
+      <figure class="screenshot-card" data-screenshot-index="1"
+        data-ios-subtitle="Home Screen" data-ipad-subtitle="Home Screen" data-mac-subtitle="Home Screen">
+        <img src="images/DT1.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Home Screen</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="2"
+        data-ios-subtitle="Log with ease" data-ipad-subtitle="Log with ease" data-mac-subtitle="Log with ease">
+        <img src="images/DT2.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Log with ease</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="3"
+        data-ios-subtitle="Organise with tags" data-ipad-subtitle="Organise with tags" data-mac-subtitle="Organise with tags">
+        <img src="images/DT3.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Organise with tags</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="4"
+        data-ios-subtitle="Organise with folders" data-ipad-subtitle="Organise with folders" data-mac-subtitle="Organise with folders">
+        <img src="images/DT4.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Organise with folders</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="5"
+        data-ios-subtitle="Keep all devices in sync" data-ipad-subtitle="Keep all devices in sync" data-mac-subtitle="Keep all devices in sync">
+        <img src="images/DT5.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Keep all devices in sync</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="6"
+        data-ios-subtitle="View dreams over time" data-ipad-subtitle="View dreams over time" data-mac-subtitle="View dreams over time">
+        <img src="images/DT6.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">View dreams over time</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="7"
+        data-ios-subtitle="Create reports and export" data-ipad-subtitle="Create reports and export" data-mac-subtitle="Create reports and export">
+        <img src="images/DT7.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Create reports and export</figcaption>
+      </figure>
+      <figure class="screenshot-card" data-screenshot-index="8"
+        data-ios-subtitle="Widget, Control Centre, and Shortcuts support"
+        data-ipad-subtitle="Widget, Control Centre, and Shortcuts support"
+        data-mac-subtitle="Widget, Control Centre, and Shortcuts support">
+        <img src="images/DT8.jpeg" alt="" class="screenshot">
+        <figcaption class="screenshot-subtitle">Widget, Control Centre, and Shortcuts support</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -219,20 +253,30 @@ function updateThemeIcon(isDark) {
 
 function toggleMobileNav() { document.querySelector('nav.main-nav').classList.toggle('open'); }
 
-const screenshotPlatform = document.getElementById('screenshot-platform');
+const screenshotPicker = document.querySelector('.screenshot-picker');
 
-screenshotPlatform.addEventListener('change', function () {
-  const platform = this.value;
-  const prefix = platform === 'ios'
-    ? 'DT'
-    : platform === 'ipad'
-      ? 'DTiPad'
-      : 'DTMac';
+if (screenshotPicker) {
+  const prefixes = { ios: 'DT', ipad: 'DTiPad', mac: 'DTMac' };
 
-  document.querySelectorAll('.screenshot[data-screenshot-index]').forEach(image => {
-    image.src = `images/${prefix}${image.dataset.screenshotIndex}.jpeg`;
+  function setScreenshotPlatform(platform) {
+    screenshotPicker.querySelectorAll('button').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.platform === platform));
+    });
+
+    document.querySelectorAll('.screenshot-card').forEach(card => {
+      const index = card.dataset.screenshotIndex;
+      const subtitle = card.dataset[`${platform}Subtitle`] || '';
+      const image = card.querySelector('.screenshot');
+
+      image.src = `images/${prefixes[platform]}${index}.jpeg`;
+      card.querySelector('.screenshot-subtitle').textContent = subtitle;
+    });
+  }
+
+  screenshotPicker.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => setScreenshotPlatform(button.dataset.platform));
   });
-});
+}
   
 </script>
 
