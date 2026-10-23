@@ -87,23 +87,29 @@
   </section>
 
   <section class="section">
-    <div class="wrap">
+  <div class="wrap">
+    <div class="screenshot-toolbar">
       <h2>Screenshots</h2>
-      <div class="screenshot-row">
-        <img src="images/FT1.jpeg" alt="Home Screen" class="screenshot">
-        <img src="images/FT2.jpeg" alt="Setup your plans" class="screenshot">
-        <img src="images/FT3.jpeg" alt="Schedule your workouts" class="screenshot">
-        <img src="images/FT4.jpeg" alt="Lots of exercises to track" class="screenshot">
-        <img src="images/FT5.jpeg" alt="And ways to track them" class="screenshot">
-        <img src="images/FT6.jpeg" alt="Track walks and runs too" class="screenshot">
-        <img src="images/FT7.jpeg" alt="Smash your PBs" class="screenshot">
-        <img src="images/FT8.jpeg" alt="See more stats with Pro" class="screenshot">
-        <img src="images/FT9.jpeg" alt="Set goals" class="screenshot">
-        <img src="images/FT10.jpeg" alt="Widget, Control Centre, and Shortcuts support" class="screenshot">
-
+      <div class="screenshot-picker" role="group" aria-label="Choose screenshot platform">
+        <button type="button" data-platform="ios" aria-pressed="true">iOS</button>
+        <button type="button" data-platform="watch" aria-pressed="false">Apple Watch</button>
       </div>
     </div>
-  </section>
+
+    <div class="screenshot-row" data-platform="ios" data-ios-prefix="FT" data-ios-extension="jpeg" data-watch-prefix="FTWatch" data-watch-extension="png">
+      <figure class="screenshot-card" data-screenshot-index="1" data-ios-caption="Home Screen" data-watch-caption="Home Screen on Apple Watch"><img src="images/FT1.jpeg" alt="Home Screen" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="2" data-ios-caption="Setup your plans" data-watch-caption="Setup your plans on Apple Watch"><img src="images/FT2.jpeg" alt="Setup your plans" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="3" data-ios-caption="Schedule your workouts" data-watch-caption="Schedule your workouts on Apple Watch"><img src="images/FT3.jpeg" alt="Schedule your workouts" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="4" data-ios-caption="Lots of exercises to track" data-watch-caption="Exercises to track on Apple Watch"><img src="images/FT4.jpeg" alt="Lots of exercises to track" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="5" data-ios-caption="And ways to track them" data-watch-caption="Track your exercises on Apple Watch"><img src="images/FT5.jpeg" alt="And ways to track them" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="6" data-ios-caption="Track walks and runs too" data-watch-caption="Track walks and runs on Apple Watch"><img src="images/FT6.jpeg" alt="Track walks and runs too" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="7" data-ios-caption="Smash your PBs" data-watch-caption="See your PBs on Apple Watch"><img src="images/FT7.jpeg" alt="Smash your PBs" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="8" data-ios-caption="See more stats with Pro" data-watch-caption="See stats on Apple Watch"><img src="images/FT8.jpeg" alt="See more stats with Pro" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="9" data-ios-caption="Set goals" data-watch-caption="Set goals on Apple Watch"><img src="images/FT9.jpeg" alt="Set goals" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="10" data-ios-caption="Widget, Control Centre, and Shortcuts support" data-watch-caption="Widget, Control Centre, and Shortcuts support on Apple Watch"><img src="images/FT10.jpeg" alt="Widget, Control Centre, and Shortcuts support" class="screenshot"></figure>
+    </div>
+  </div>
+</section>
 
  <section class="section">
     <div class="wrap">
@@ -316,6 +322,7 @@ function toggleMobileNav() {
   document.querySelector('nav.main-nav').classList.toggle('open');
 }
 </script>
+  <script src="screenshot-picker.js"></script>
 
 </body>
 </html>
