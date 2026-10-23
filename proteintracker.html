@@ -87,21 +87,28 @@
   </section>
 
   <section class="section">
-    <div class="wrap">
+  <div class="wrap">
+    <div class="screenshot-toolbar">
       <h2>Screenshots</h2>
-      <div class="screenshot-row">
-         <img src="images/ST1.jpeg" alt="Home Screen" class="screenshot">
-          <img src="images/ST2.jpeg" alt="Set your target" class="screenshot">
-          <img src="images/ST3.jpeg" alt="Create presets" class="screenshot">
-          <img src="images/ST4.jpeg" alt="Customise your presets" class="screenshot">
-          <img src="images/ST5.jpeg" alt="See statistics" class="screenshot">
-          <img src="images/ST6.jpeg" alt="Timeline Screen" class="screenshot">
-          <img src="images/ST7.jpeg" alt="Export to CSV or PDF" class="screenshot">
-          <img src="images/ST8.jpeg" alt="Customise and Languages" class="screenshot">
-          <img src="images/ST9.jpeg" alt="Widget, Control Centre, and Shortcuts support" class="screenshot">
+      <div class="screenshot-picker" role="group" aria-label="Choose screenshot platform">
+        <button type="button" data-platform="ios" aria-pressed="true">iOS</button>
+        <button type="button" data-platform="watch" aria-pressed="false">Apple Watch</button>
       </div>
     </div>
-  </section>
+
+    <div class="screenshot-row" data-platform="ios" data-ios-prefix="ST" data-ios-extension="jpeg" data-watch-prefix="STWatch" data-watch-extension="png">
+      <figure class="screenshot-card" data-screenshot-index="1" data-ios-caption="Home Screen" data-watch-caption="Home Screen on Apple Watch"><img src="images/ST1.jpeg" alt="Home Screen" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="2" data-ios-caption="Set your target" data-watch-caption="Set your target on Apple Watch"><img src="images/ST2.jpeg" alt="Set your target" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="3" data-ios-caption="Create presets" data-watch-caption="Create presets on Apple Watch"><img src="images/ST3.jpeg" alt="Create presets" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="4" data-ios-caption="Customise your presets" data-watch-caption="Customise your presets on Apple Watch"><img src="images/ST4.jpeg" alt="Customise your presets" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="5" data-ios-caption="See statistics" data-watch-caption="See statistics on Apple Watch"><img src="images/ST5.jpeg" alt="See statistics" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="6" data-ios-caption="Timeline Screen" data-watch-caption="Timeline on Apple Watch"><img src="images/ST6.jpeg" alt="Timeline Screen" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="7" data-ios-caption="Export to CSV or PDF" data-watch-caption="Export to CSV or PDF on Apple Watch"><img src="images/ST7.jpeg" alt="Export to CSV or PDF" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="8" data-ios-caption="Customise and Languages" data-watch-caption="Customise and Languages on Apple Watch"><img src="images/ST8.jpeg" alt="Customise and Languages" class="screenshot"></figure>
+      <figure class="screenshot-card" data-screenshot-index="9" data-ios-caption="Widget, Control Centre, and Shortcuts support" data-watch-caption="Widget, Control Centre, and Shortcuts support on Apple Watch"><img src="images/ST9.jpeg" alt="Widget, Control Centre, and Shortcuts support" class="screenshot"></figure>
+    </div>
+  </div>
+</section>
 
   <section class="section">
   <div class="wrap">
@@ -288,7 +295,7 @@ function toggleMobileNav() {
   document.querySelector('nav.main-nav').classList.toggle('open');
 }
 </script>
-
+<script src="screenshot-picker.js"></script>
 
 </body>
 </html>
