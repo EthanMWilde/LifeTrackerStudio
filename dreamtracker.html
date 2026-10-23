@@ -309,36 +309,39 @@ if (screenshotPicker && screenshotRow) {
   });
 }
 
-  document.querySelectorAll('.screenshot-row').forEach(row => {
-  let isDragging = false;
-  let startX = 0;
-  let startScrollLeft = 0;
+  const screenshotRows = document.querySelectorAll('.screenshot-row');
+let draggedRow = null;
+let dragStartX = 0;
+let dragStartScrollLeft = 0;
 
-  row.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+screenshotRows.forEach(row => {
+  row.addEventListener('mousedown', event => {
+    if (event.button !== 0) return;
 
-    isDragging = true;
-    startX = event.clientX;
-    startScrollLeft = row.scrollLeft;
+    draggedRow = row;
+    dragStartX = event.clientX;
+    dragStartScrollLeft = row.scrollLeft;
     row.classList.add('is-dragging');
-    row.setPointerCapture(event.pointerId);
     event.preventDefault();
   });
-
-  row.addEventListener('pointermove', event => {
-    if (!isDragging) return;
-    row.scrollLeft = startScrollLeft - (event.clientX - startX);
-  });
-
-  function stopDragging() {
-    isDragging = false;
-    row.classList.remove('is-dragging');
-  }
-
-  row.addEventListener('pointerup', stopDragging);
-  row.addEventListener('pointercancel', stopDragging);
-  row.addEventListener('lostpointercapture', stopDragging);
 });
+
+document.addEventListener('mousemove', event => {
+  if (!draggedRow) return;
+
+  draggedRow.scrollLeft =
+    dragStartScrollLeft - (event.clientX - dragStartX);
+});
+
+function stopScreenshotDrag() {
+  if (!draggedRow) return;
+
+  draggedRow.classList.remove('is-dragging');
+  draggedRow = null;
+}
+
+document.addEventListener('mouseup', stopScreenshotDrag);
+window.addEventListener('blur', stopScreenshotDrag);
   
 </script>
 
