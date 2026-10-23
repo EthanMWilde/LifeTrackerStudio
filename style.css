@@ -968,3 +968,68 @@ body.dark {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.screenshot-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.screenshot-toolbar h2 {
+  margin: 0;
+}
+
+.screenshot-picker {
+  display: inline-flex;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card-bg);
+}
+
+.screenshot-picker button {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 13px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.screenshot-picker button[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+}
+
+.screenshot-picker button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.screenshot-row {
+  align-items: flex-start;
+}
+
+.screenshot-card {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+}
+
+.screenshot-subtitle {
+  max-width: 28ch;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+}
