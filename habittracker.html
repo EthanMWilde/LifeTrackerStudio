@@ -272,14 +272,6 @@ document.addEventListener('click', function(e) {
   }
 });
 
-document.querySelectorAll('.screenshot').forEach(function(img) {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', function() {
-      document.getElementById('lightbox-img').src = this.src;
-      document.getElementById('lightbox').style.display = 'flex';
-    });
-  });
-
 
 function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
