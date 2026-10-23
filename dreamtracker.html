@@ -273,8 +273,9 @@ function updateThemeIcon(isDark) {
 function toggleMobileNav() { document.querySelector('nav.main-nav').classList.toggle('open'); }
 
 const screenshotPicker = document.querySelector('.screenshot-picker');
+const screenshotRow = document.querySelector('.screenshot-row');
 
-if (screenshotPicker) {
+if (screenshotPicker && screenshotRow) {
   const prefixes = {
     ios: 'DT',
     ipad: 'DTiPad',
@@ -289,7 +290,9 @@ if (screenshotPicker) {
       );
     });
 
-    document.querySelectorAll('.screenshot-card').forEach(card => {
+    screenshotRow.dataset.platform = platform;
+
+    screenshotRow.querySelectorAll('.screenshot-card').forEach(card => {
       const index = card.dataset.screenshotIndex;
       const image = card.querySelector('.screenshot');
       const caption = card.dataset[`${platform}Caption`] || '';
@@ -305,6 +308,37 @@ if (screenshotPicker) {
     });
   });
 }
+
+  document.querySelectorAll('.screenshot-row').forEach(row => {
+  let isDragging = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+
+  row.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+
+    isDragging = true;
+    startX = event.clientX;
+    startScrollLeft = row.scrollLeft;
+    row.classList.add('is-dragging');
+    row.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+
+  row.addEventListener('pointermove', event => {
+    if (!isDragging) return;
+    row.scrollLeft = startScrollLeft - (event.clientX - startX);
+  });
+
+  function stopDragging() {
+    isDragging = false;
+    row.classList.remove('is-dragging');
+  }
+
+  row.addEventListener('pointerup', stopDragging);
+  row.addEventListener('pointercancel', stopDragging);
+  row.addEventListener('lostpointercapture', stopDragging);
+});
   
 </script>
 
