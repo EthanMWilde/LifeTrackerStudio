@@ -1067,3 +1067,9 @@ body.dark {
   font-size: 16px;
   line-height: 1.2;
 }
+
+/* Apple Watch screenshots */
+.screenshot-row[data-platform="watch"] .screenshot {
+  height: 250px;
+  width: auto;
+}
