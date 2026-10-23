@@ -23,6 +23,12 @@
   --st: #e0392b;
   --st-tint: #fdecea;
 
+  --dt: #7C4DD6;
+  --dt-tint: #EFE9FB;
+
+  --bt: #98704E;
+  --bt-tint: #F2E7D7;
+
   --maxw: 880px;
 }
 
@@ -802,7 +808,7 @@ body.dark {
 
 @keyframes carousel-scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(calc(-6 * (100px + 16px))); }
+  100% { transform: translateX(calc(-7 * (100px + 16px))); }
 }
 
 @media (max-width: 760px) {
