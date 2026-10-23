@@ -88,46 +88,59 @@
 
     <div class="screenshot-row">
       <figure class="screenshot-card" data-screenshot-index="1"
-        data-ios-subtitle="Home Screen" data-ipad-subtitle="Home Screen" data-mac-subtitle="Home Screen">
-        <img src="images/DT1.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Home Screen</figcaption>
+        data-ios-caption="Home Screen on iPhone"
+        data-ipad-caption="Home Screen on iPad"
+        data-mac-caption="Home Screen on Mac">
+        <img src="images/DT1.jpeg" alt="Home Screen on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="2"
-        data-ios-subtitle="Log with ease" data-ipad-subtitle="Log with ease" data-mac-subtitle="Log with ease">
-        <img src="images/DT2.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Log with ease</figcaption>
+        data-ios-caption="Log with ease on iPhone"
+        data-ipad-caption="Log with ease on iPad"
+        data-mac-caption="Log with ease on Mac">
+        <img src="images/DT2.jpeg" alt="Log with ease on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="3"
-        data-ios-subtitle="Organise with tags" data-ipad-subtitle="Organise with tags" data-mac-subtitle="Organise with tags">
-        <img src="images/DT3.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Organise with tags</figcaption>
+        data-ios-caption="Organise with tags on iPhone"
+        data-ipad-caption="Organise with tags on iPad"
+        data-mac-caption="Organise with tags on Mac">
+        <img src="images/DT3.jpeg" alt="Organise with tags on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="4"
-        data-ios-subtitle="Organise with folders" data-ipad-subtitle="Organise with folders" data-mac-subtitle="Organise with folders">
-        <img src="images/DT4.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Organise with folders</figcaption>
+        data-ios-caption="Organise with folders on iPhone"
+        data-ipad-caption="Organise with folders on iPad"
+        data-mac-caption="Organise with folders on Mac">
+        <img src="images/DT4.jpeg" alt="Organise with folders on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="5"
-        data-ios-subtitle="Keep all devices in sync" data-ipad-subtitle="Keep all devices in sync" data-mac-subtitle="Keep all devices in sync">
-        <img src="images/DT5.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Keep all devices in sync</figcaption>
+        data-ios-caption="Keep devices in sync on iPhone"
+        data-ipad-caption="Keep devices in sync on iPad"
+        data-mac-caption="Keep devices in sync on Mac">
+        <img src="images/DT5.jpeg" alt="Keep devices in sync on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="6"
-        data-ios-subtitle="View dreams over time" data-ipad-subtitle="View dreams over time" data-mac-subtitle="View dreams over time">
-        <img src="images/DT6.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">View dreams over time</figcaption>
+        data-ios-caption="View dreams over time on iPhone"
+        data-ipad-caption="View dreams over time on iPad"
+        data-mac-caption="View dreams over time on Mac">
+        <img src="images/DT6.jpeg" alt="View dreams over time on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="7"
-        data-ios-subtitle="Create reports and export" data-ipad-subtitle="Create reports and export" data-mac-subtitle="Create reports and export">
-        <img src="images/DT7.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Create reports and export</figcaption>
+        data-ios-caption="Create reports and export on iPhone"
+        data-ipad-caption="Create reports and export on iPad"
+        data-mac-caption="Create reports and export on Mac">
+        <img src="images/DT7.jpeg" alt="Create reports and export on iPhone" class="screenshot">
       </figure>
+
       <figure class="screenshot-card" data-screenshot-index="8"
-        data-ios-subtitle="Widget, Control Centre, and Shortcuts support"
-        data-ipad-subtitle="Widget, Control Centre, and Shortcuts support"
-        data-mac-subtitle="Widget, Control Centre, and Shortcuts support">
-        <img src="images/DT8.jpeg" alt="" class="screenshot">
-        <figcaption class="screenshot-subtitle">Widget, Control Centre, and Shortcuts support</figcaption>
+        data-ios-caption="Widgets, Control Centre, and Shortcuts on iPhone"
+        data-ipad-caption="Widgets, Control Centre, and Shortcuts on iPad"
+        data-mac-caption="Widgets, Control Centre, and Shortcuts on Mac">
+        <img src="images/DT8.jpeg" alt="Widgets, Control Centre, and Shortcuts on iPhone" class="screenshot">
       </figure>
     </div>
   </div>
@@ -262,25 +275,34 @@ function toggleMobileNav() { document.querySelector('nav.main-nav').classList.to
 const screenshotPicker = document.querySelector('.screenshot-picker');
 
 if (screenshotPicker) {
-  const prefixes = { ios: 'DT', ipad: 'DTiPad', mac: 'DTMac' };
+  const prefixes = {
+    ios: 'DT',
+    ipad: 'DTiPad',
+    mac: 'DTMac'
+  };
 
   function setScreenshotPlatform(platform) {
     screenshotPicker.querySelectorAll('button').forEach(button => {
-      button.setAttribute('aria-pressed', String(button.dataset.platform === platform));
+      button.setAttribute(
+        'aria-pressed',
+        String(button.dataset.platform === platform)
+      );
     });
 
     document.querySelectorAll('.screenshot-card').forEach(card => {
       const index = card.dataset.screenshotIndex;
-      const subtitle = card.dataset[`${platform}Subtitle`] || '';
       const image = card.querySelector('.screenshot');
+      const caption = card.dataset[`${platform}Caption`] || '';
 
       image.src = `images/${prefixes[platform]}${index}.jpeg`;
-      card.querySelector('.screenshot-subtitle').textContent = subtitle;
+      image.alt = caption;
     });
   }
 
   screenshotPicker.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => setScreenshotPlatform(button.dataset.platform));
+    button.addEventListener('click', () => {
+      setScreenshotPlatform(button.dataset.platform);
+    });
   });
 }
   
