@@ -259,13 +259,7 @@
     }
   });
 
-  document.querySelectorAll('.screenshot').forEach(function(img) {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', function() {
-      document.getElementById('lightbox-img').src = this.src;
-      document.getElementById('lightbox').style.display = 'flex';
-    });
-  });
+
   
 
   function toggleTheme() {
