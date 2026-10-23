@@ -1019,3 +1019,8 @@ body.dark {
 .app-cta-group .store-button {
   margin-top: 0;
 }
+
+
+.app-header .platform-row {
+  margin-top: 14px;
+}
