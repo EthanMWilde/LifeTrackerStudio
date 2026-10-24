@@ -307,25 +307,31 @@ if (screenshotPicker && screenshotRow) {
     mac: 'DTMac'
   };
 
-  function setScreenshotPlatform(platform) {
-    screenshotPicker.querySelectorAll('button').forEach(button => {
-      button.setAttribute(
-        'aria-pressed',
-        String(button.dataset.platform === platform)
-      );
-    });
+ function setScreenshotPlatform(platform) {
+  const screenshotCounts = { ios: 8, ipad: 8, mac: 7 };
 
-    screenshotRow.dataset.platform = platform;
+  screenshotPicker.querySelectorAll('button').forEach(button => {
+    button.setAttribute(
+      'aria-pressed',
+      String(button.dataset.platform === platform)
+    );
+  });
 
-    screenshotRow.querySelectorAll('.screenshot-card').forEach(card => {
-      const index = card.dataset.screenshotIndex;
-      const image = card.querySelector('.screenshot');
-      const caption = card.dataset[`${platform}Caption`] || '';
+  screenshotRow.dataset.platform = platform;
 
-      image.src = `images/${prefixes[platform]}${index}.jpeg`;
-      image.alt = caption;
-    });
-  }
+  screenshotRow.querySelectorAll('.screenshot-card').forEach(card => {
+    const index = Number(card.dataset.screenshotIndex);
+    const image = card.querySelector('.screenshot');
+    const caption = card.dataset[`${platform}Caption`] || '';
+
+    card.hidden = index > screenshotCounts[platform];
+
+    if (card.hidden) return;
+
+    image.src = `images/${prefixes[platform]}${index}.jpeg`;
+    image.alt = caption;
+  });
+}
 
   screenshotPicker.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
