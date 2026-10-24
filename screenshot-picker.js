@@ -22,14 +22,20 @@ document.querySelectorAll('.screenshot-toolbar').forEach(toolbar => {
 
     row.dataset.platform = platform;
 
-    row.querySelectorAll('.screenshot-card').forEach(card => {
-      const index = card.dataset.screenshotIndex;
-      const image = card.querySelector('.screenshot');
-      const caption = card.dataset[`${platform}Caption`] || '';
+    const count = Number(row.dataset[`${platform}Count`]) || 0;
 
-      image.src = `images/${prefix}${index}.${extension}`;
-      image.alt = caption;
-    });
+row.querySelectorAll('.screenshot-card').forEach(card => {
+  const index = Number(card.dataset.screenshotIndex);
+  const image = card.querySelector('.screenshot');
+  const caption = card.dataset[`${platform}Caption`] || '';
+
+  card.hidden = index > count;
+
+  if (card.hidden) return;
+
+  image.src = `images/${prefix}${index}.${extension}`;
+  image.alt = caption;
+});
   }
 
   buttons.forEach(button => {
