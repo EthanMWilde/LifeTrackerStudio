@@ -1073,3 +1073,7 @@ body.dark {
   height: 250px;
   width: auto;
 }
+
+.screenshot-card[hidden] {
+  display: none;
+}
