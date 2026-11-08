@@ -796,7 +796,7 @@ body.dark {
   display: flex;
   flex-direction: row;
   gap: 16px;
-  animation: carousel-scroll 14s linear infinite;
+  animation: carousel-scroll 16s linear infinite;
 }
 
 .carousel-icon {
@@ -808,7 +808,7 @@ body.dark {
 
 @keyframes carousel-scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(calc(-7 * (100px + 16px))); }
+  100% { transform: translateX(calc(-8 * (100px + 16px))); }
 }
 
 @media (max-width: 760px) {
